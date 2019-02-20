@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="231px" height="67px" viewBox="0 0 231 67" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>Rectangle 2 Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="58.8811078%" y1="21.4056698%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#F9954C" offset="0%"></stop>
+            <stop stop-color="#F15C25" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.-Welcome" transform="translate(-653.000000, -280.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <path d="M686.5,280 L850.5,280 C869.001539,280 884,294.998461 884,313.5 L884,313.5 C884,332.001539 869.001539,347 850.5,347 L686.5,347 C667.998461,347 653,332.001539 653,313.5 L653,313.5 C653,294.998461 667.998461,280 686.5,280 Z" id="Rectangle-2-Copy"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="220px" height="288px" viewBox="0 0 220 288" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>Oval</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="-18.793787%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#11A3FF" offset="0%"></stop>
+            <stop stop-color="#0369A9" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.-Welcome" transform="translate(-897.000000, -405.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <path d="M1023.69422,664.638787 C1091.0961,655.350747 1101.69525,623.079401 1101.69525,580.934022 C1101.69525,538.788643 1067.73922,385.741756 1023.69422,433.176034 C986.253701,473.497622 915.944183,509.396609 906.773376,543.364338 C899.91872,568.753284 840.731831,545.754136 840.731831,587.777931 C840.731831,671.989766 930.391002,677.496056 1023.69422,664.638787 Z" id="Oval" transform="translate(971.213538, 547.025677) rotate(316.000000) translate(-971.213538, -547.025677) "></path>
+        </g>
+    </g>
+</svg>

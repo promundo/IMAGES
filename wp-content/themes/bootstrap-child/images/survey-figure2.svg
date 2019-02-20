@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="194px" height="174px" viewBox="0 0 194 174" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Rectangle 2 Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="58.8811078%" y1="21.4056698%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#F9954C" offset="0%"></stop>
+            <stop stop-color="#F15C25" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2.1-Full-user-guide" transform="translate(-653.000000, -171.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <path d="M668.011518,224.404458 L832.011518,224.404458 C850.513057,224.404458 865.511518,239.402919 865.511518,257.904458 L865.511518,257.904458 C865.511518,276.405997 850.513057,291.404458 832.011518,291.404458 L668.011518,291.404458 C649.509979,291.404458 634.511518,276.405997 634.511518,257.904458 L634.511518,257.904458 C634.511518,239.402919 649.509979,224.404458 668.011518,224.404458 Z" id="Rectangle-2-Copy" transform="translate(750.011518, 257.904458) rotate(40.000000) translate(-750.011518, -257.904458) "></path>
+        </g>
+    </g>
+</svg>

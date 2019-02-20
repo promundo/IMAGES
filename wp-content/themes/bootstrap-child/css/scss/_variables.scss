@@ -1,0 +1,56 @@
+/********************
+** Breakpoints
+********************/
+
+$bp-xsmall:       576;
+$bp-small:				768;
+$bp-medium:				992;
+$bp-large:				1200;
+$bp-xlarge:				1400;
+
+/********************
+** Media Queries
+********************/
+
+$mq-xsmall:       "only screen and (min-width: #{$bp-xsmall}px)";
+$mq-small:				"only screen and (min-width: #{$bp-small}px)";
+$mq-medium:				"only screen and (min-width: #{$bp-medium}px)";
+$mq-large:				"only screen and (min-width: #{$bp-large}px)";
+$mq-xlarge:				"only screen and (min-width: #{$bp-xlarge}px)";
+$mq-retina:				"only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 1.5dppx)";
+
+/********************
+** Fonts
+********************/
+
+$baseFontSize:			16;
+$baseLineHeight:		24;
+
+$f-primary:             'Montserrat', sans-serif;
+$f-secondary:           'Cabin', sans-serif;
+
+
+/********************
+** Colors
+********************/
+
+$c-text:					#61727D;
+
+$c-white:					#FFFFFF;
+$c-black:         #000000;
+$c-blue:          #0076C0;
+$c-dark-blue:     #006288;
+$c-red:           #f15a22;
+
+
+/********************
+** Paths
+********************/
+
+$p-images:        '../images/';
+
+/********************
+** Transition Timing Functions
+********************/
+
+$cubic-bezier: cubic-bezier(0.550, 0.085, 0.000, 0.990);

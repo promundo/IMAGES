@@ -1,0 +1,189 @@
+.site-footer{
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid #f1f1f1;
+  background: #fff;
+  padding: 10px 0;
+  font-size: inherit;
+  @include bp(small){
+    padding: 20px 0;
+  }
+  &:before{
+    content: "";
+    display: none;
+    width: 28px;
+    height: 36px;
+    position: absolute;
+    margin-top: -18px;
+    margin-left: -14px; 
+    left: 50%;
+    top: 50%;
+    background: url($p-images+'logo-image.svg') no-repeat 0 0;
+    background-size: 100% auto;
+    @include bp(small){
+      display: block;
+      margin-left: 20px; 
+    }
+    @include bp(medium){
+      margin-left: -14px; 
+    }
+  }
+  ul.menu{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    list-style: none;
+    vertical-align: top;
+    @include font-size(14);
+    @include line-height(20);
+    letter-spacing: 0.5px;
+    @include bp(small){
+      text-align: left;
+      margin-right: -10px;
+    }
+    @include bp(medium){
+      margin-right: 0;
+    }
+    li{
+      font-weight: 600;
+      padding: 5px 0;
+      @include bp(xsmall){
+        padding: 0 10px;
+        display: inline-block;
+        margin: 0 0 0 -4px;
+      }
+      @include bp(small){
+        padding: 0 10px;
+      }
+      @include bp(medium){
+        padding: 0 15px;
+      }
+      &:first-child{
+        padding-left:0;
+      }
+      &:last-child{
+        padding-right:0;
+      }
+    }
+    a{
+      color: $c-dark-blue;
+      &:hover{
+        opacity: 0.7;
+      }
+    }
+  }
+  p{
+    font-family: $f-secondary;
+    color: $c-dark-blue;
+    margin: 0;
+    @include font-size(14);
+    @include line-height(20);
+    text-align: center;
+    @include bp(small){
+      text-align: left;
+    }
+  }
+  .footer-right{
+    .widget{
+      display: block;
+      padding: 5px 0;
+      @include bp(small){
+        float: right;
+        padding: 0;
+      }
+      
+    }
+    .widget + .widget{
+      @include bp(small){
+        margin-right: 30px;
+      }
+      
+    }
+  }
+  .social-icons-lists{
+    text-align: center;
+    padding: 2px 0;
+    line-height: 0;
+    @include bp(small){
+      text-align: left;
+    }
+    li{
+      padding: 0;
+      margin: 0 8px;
+      vertical-align: top;
+      &:first-child{
+        margin-left: 0;
+      }
+      &:last-child{
+        margin-right: 0;
+      }
+      a{
+        width: 16px;
+        height: 16px;
+        display: block;
+        margin: 0;
+        vertical-align: top;
+        .socicon{
+          display: block;
+          padding: 0 !important;
+          width: 16px;
+          height: 16px;
+          position: relative;
+          top: 0;
+          background: transparent !important;
+          &.socicon-linkedin{
+            &:before{
+              content: "";
+              display: block;
+              width: 16px;
+              height: 16px;
+              position: absolute;
+              top: 0;
+              left: 0;
+              background: url(../images/icon-linkedin.svg) no-repeat 0 0;
+            }
+          }
+          &.socicon-twitter{
+            &:before{
+              content: "";
+              display: block;
+              width: 16px;
+              height: 13px;
+              position: absolute;
+              top: 2px;
+              left: 0;
+              background: url(../images/icon-twitter.svg) no-repeat 0 0;
+            }
+          }
+          &.socicon-youtube{
+            &:before{
+              content: "";
+              display: block;
+              width: 20px;
+              height: 14px;
+              position: absolute;
+              top: 1px;
+              left: -1px;
+              background: url(../images/icon-youtube.svg) no-repeat 0 0;
+            }
+          }
+          &.socicon-facebook{
+            &:before{
+              content: "";
+              display: block;
+              width: 7px;
+              height: 15px;
+              position: absolute;
+              top: 1px;
+              left: 4px;
+              background: url(../images/icon-facebook.svg) no-repeat 0 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

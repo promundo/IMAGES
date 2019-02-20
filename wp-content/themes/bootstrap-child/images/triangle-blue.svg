@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="13px" viewBox="0 0 17 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Triangle Copy 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="-18.793787%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#11A3FF" offset="0%"></stop>
+            <stop stop-color="#0369A9" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2.1-Full-user-guide" transform="translate(-843.000000, -723.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <polygon id="Triangle-Copy-2" points="851.5 723 860 736 843 736"></polygon>
+        </g>
+    </g>
+</svg>
