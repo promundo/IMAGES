@@ -7,12 +7,12 @@ if (!function_exists('set_html_content_type')) {
 }
 	
 function login_validate(){
-	if( isset($_POST['option']) and $_POST['option'] == "afo_user_login"){
+	if( isset($_POST['option']) and $_POST['option'] == "ap_user_login"){
 		
 		$nonce_check = (get_option('nonce_check_on_login') == 'Yes'?true:false);
 		if( $nonce_check ){
 			if ( ! isset( $_POST['login_widget_field'] )  || ! wp_verify_nonce( $_POST['login_widget_field'], 'login_widget_action' ) ) {
-			   wp_die( 'Sorry, your nonce did not verify.' );
+			   wp_die( __('Sorry, your nonce did not verify.','login-sidebar-widget') );
 			   exit;
 			} 
 		}
@@ -41,7 +41,7 @@ function login_validate(){
 			} else{
 				$aperror->add( "msg_class", "error_wid_login" );
 				$aperror->add( "msg", __(get_login_error_message_text($user),'login-sidebar-widget') );								
-				do_action('afo_login_log_front', $user);
+				do_action('ap_login_log_front', $user);
 			}
 		} else {
 			$aperror->add( "msg_class", "error_wid_login" );
@@ -87,15 +87,15 @@ function forgot_pass_validate(){
 			remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
 		} 
 		else {
-			wp_die(__('Not a Valid Key.','login-sidebar-widget'));
+			wp_die(__('Not a valid key.','login-sidebar-widget'));
 			exit;
 		}
 	}
 
-	if(isset($_POST['option']) and sanitize_text_field($_POST['option']) == "afo_forgot_pass"){
+	if(isset($_POST['option']) and sanitize_text_field($_POST['option']) == "ap_forgot_pass"){
 		
 		if ( ! isset( $_POST['login_widget_field'] )  || ! wp_verify_nonce( $_POST['login_widget_field'], 'login_widget_action' ) ) {
-		   wp_die( 'Sorry, your nonce did not verify.' );
+		   wp_die( __('Sorry, your nonce did not verify.','login-sidebar-widget') );
 		   exit;
 		} 
 		

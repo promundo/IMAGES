@@ -5,6 +5,7 @@
 
   function initExportCsv(){
     $('.export-csv').on('click', function(event) {
+
       event.preventDefault();
       var $link = $(this);
       var ajaxdata = {

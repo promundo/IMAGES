@@ -11,8 +11,8 @@ function print_survey_export_file($variables, $filename){
 
   $dir = plugin_dir_path( __FILE__ );
   $template = $dir . 'resources/template.docx';
-  $upload_dir = wp_upload_dir('temp');
-  $resuts = $upload_dir['path'] . $filename;
+  $upload_dir = wp_get_upload_dir();
+  $resuts = $upload_dir['basedir'] . '/print-survey/' . $filename;
   $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor($template);
 
 
@@ -23,6 +23,16 @@ function print_survey_export_file($variables, $filename){
       $answer = '';
       $response_options = get_field( "response_options", $id);
       $question = get_field( "question_text", $id);
+      $scale_terms = get_the_term_list($id,'scale_category', 'SCALE: ',', ','');
+      $scale = '';
+      $baseSegment = get_field( "base_segment", $id); 
+
+      if (!empty($baseSegment)) {
+        $baseSegment .= "\r\n"."<w:br/>";
+      }
+      if (!empty($scale_terms)) {
+        $scale = strip_tags($scale_terms);
+      }
       if (!empty($response_options)) {
         $response_options_value = [];
         $count = 0;
@@ -39,6 +49,8 @@ function print_survey_export_file($variables, $filename){
         }
       }
       $number = $key + 1;
+      $templateProcessor->setValue('variableScale#'.$number, $scale);
+      $templateProcessor->setValue('variableBaseSegment#'.$number, $baseSegment);
       $templateProcessor->setValue('variableQuestion#'.$number, $question);
       $templateProcessor->setValue('variableAnswer#'.$number, $answer);
     }
@@ -49,15 +61,36 @@ function print_survey_export_file($variables, $filename){
 }
 
 
-if( ! wp_next_scheduled( 'print_survey_cron' ) ) {
-  wp_schedule_event( time(), 'hourly', 'print_survey_cron');
+if( ! wp_next_scheduled( 'print_survey_cron_export_file' ) ) {
+  wp_schedule_event( time(), 'hourly', 'print_survey_cron_export_file');
 }
 
-add_action('print_survey_cron', 'print_survey_test_export_file');
+add_action('print_survey_cron_export_file', 'print_survey_test_export_file');
 
 function print_survey_test_export_file(){
   //$variables = get_field( 'variables', 'user_1' );
   //print_survey_export_file($variables,'cron-results.docx');
+}
+
+if( ! wp_next_scheduled( 'print_survey_cron_delete_files' ) ) {
+  wp_schedule_event( time(), 'hourly', 'print_survey_cron_delete_files');
+}
+
+add_action('print_survey_cron_delete_files', 'print_survey_delete_files');
+
+
+function print_survey_delete_files(){
+  $upload_dir = wp_get_upload_dir();
+  $print_dir = $upload_dir['basedir'] . '/print-survey/';
+  $files = array_diff(scandir($print_dir), array('.', '..'));
+
+  $time = time();
+  foreach ($files as $file) {
+    $file_time = filemtime($print_dir.$file);
+    if ($time - $file_time > 3600) {
+      unlink($print_dir.$file);
+    }
+  }
 }
 
 
@@ -101,10 +134,10 @@ function print_survey_export_action(){
     print_survey_export_file($variables,$filename);
     update_field( 'print_survey', 1, $id );
     update_field( 'autoload_survey', 0, $id );
-    update_field( 'variables', [], $id );
+    //update_field( 'variables', [], $id );
 
-    $upload_dir = wp_upload_dir('temp');
-    $data['url'] = $upload_dir['url'] . $filename;
+    $upload_dir = wp_get_upload_dir();
+    $data['url'] = $upload_dir['baseurl'] . '/print-survey/' . $filename;
   }
 
   echo json_encode($data);

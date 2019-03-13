@@ -3,7 +3,7 @@
  * Plugin Name: Shortcode in Menus
  * Description: Allows you to add shortcodes in WordPress Navigation Menus
  * Plugin URI: http://wordpress.org/plugins/shortcode-in-menus/
- * Version: 3.4
+ * Version: 3.5
  * Author: Gagan Deep Singh
  * Author URI: https://gagan0123.com
  * Text Domain: shortcode-in-menus
@@ -33,7 +33,14 @@ if ( ! defined( 'GS_SIM_URL' ) ) {
 	 */
 	define( 'GS_SIM_URL', trailingslashit( plugins_url( '', __FILE__ ) ) );
 }
-
+if ( ! defined( 'GS_SIM_RES' ) ) {
+	/**
+	 * Resource version for busting cache.
+	 *
+	 * @since 3.5
+	 */
+	define( 'GS_SIM_RES', 1.0 );
+}
 /**
  * The core plugin class
  */

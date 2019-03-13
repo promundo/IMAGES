@@ -9,6 +9,7 @@
 
 
 // begins template. -------------------------------------------------------------------------
+bootstrap_child_redirect_to_login_if_not_login();
 $variables = bootstrap_child_get_survey_variables();
 get_header('hero');
 ?>
@@ -26,6 +27,7 @@ if (have_posts()) {
   <div class="container">
     <div class="row">
       <main id="main" class="col-md-12 site-main" role="main">
+        <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
         <table class="responsive-table">
           <thead>
             <tr>

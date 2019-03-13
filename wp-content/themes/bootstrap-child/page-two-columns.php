@@ -11,7 +11,9 @@
 // begins template. -------------------------------------------------------------------------
 get_header();
 ?> 
+
                 <main id="main" class="col-md-12 site-main two-columns" role="main">
+                    <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
                     <?php
                     if (have_posts()) {
                         $Bsb4Design = new \BootstrapBasic4\Bsb4Design();

@@ -7,13 +7,13 @@ class login_settings {
 		$this->load_settings();
 	}
 	
-	public function login_widget_afo_save_settings(){
+	public function login_widget_ap_save_settings(){
 		global $lsw_default_options_data;
 		
-		if(isset($_POST['option']) and $_POST['option'] == "login_widget_afo_save_settings"){
+		if(isset($_POST['option']) and $_POST['option'] == "login_widget_ap_save_settings"){
 			
-			if ( ! isset( $_POST['login_widget_afo_field'] )  || ! wp_verify_nonce( $_POST['login_widget_afo_field'], 'login_widget_afo_action' ) ) {
-			   wp_die( 'Sorry, your nonce did not verify.' );
+			if ( ! isset( $_POST['login_widget_ap_field'] )  || ! wp_verify_nonce( $_POST['login_widget_ap_field'], 'login_widget_ap_action' ) ) {
+			   wp_die( __('Sorry, your nonce did not verify.', 'login-sidebar-widget'));
 			   exit;
 			} 
 			$lmc = new login_message_class;
@@ -37,45 +37,38 @@ class login_settings {
 			}
 			
 			if(isset( $_POST['load_default_style'] ) and sanitize_text_field($_POST['load_default_style']) == "Yes"){
-				update_option( 'custom_style_afo', sanitize_text_field($this->default_style) );
+				update_option( 'custom_style_ap', sanitize_text_field($this->default_style) );
 			} else {
-				update_option( 'custom_style_afo',  sanitize_text_field($_POST['custom_style_afo']) );
+				update_option( 'custom_style_ap',  sanitize_text_field($_POST['custom_style_ap']) );
 			}
 			
 			$lmc->add_message('Settings updated successfully.','updated');
 		}
 	}
 	
-	public function login_widget_afo_options () {
-	
-	global $wpdb;
+	public function removeslashes($string){
+		$string=implode("",explode("\\",$string));
+		return stripslashes(trim($string));
+	}
+
+	public function login_widget_ap_options () {
+		global $wpdb, $lsw_default_options_data;
+		
 		$lmc = new login_message_class;
 		
-		$redirect_page 					= get_option('redirect_page');
-		$redirect_page_url 				= get_option('redirect_page_url');
-		$logout_redirect_page 			= get_option('logout_redirect_page');
-		$link_in_username 				= get_option('link_in_username');
-		$login_afo_rem 					= get_option('login_afo_rem');
-		$login_afo_forgot_pass_link 	= get_option('login_afo_forgot_pass_link');
-		$login_afo_forgot_pass_page_url = get_option('login_afo_forgot_pass_page_url');
-		$login_afo_register_link 		= get_option('login_afo_register_link');
-		$login_afo_register_page_url 	= get_option('login_afo_register_page_url');
+		$stripslashes = array('custom_style_ap', 'forgot_password_link_mail_subject', 'forgot_password_link_mail_body', 'new_password_mail_subject', 'new_password_mail_body', 'login_sidebar_widget_from_email', 'lap_invalid_username', 'lap_invalid_email', 'lap_invalid_password' );
 		
-		$lafo_invalid_username 	= get_option('lafo_invalid_username');
-		$lafo_invalid_email 	= get_option('lafo_invalid_email');
-		$lafo_invalid_password 	= get_option('lafo_invalid_password');
+		if( is_array($lsw_default_options_data) ){
+			foreach( $lsw_default_options_data as $key => $value ){
+				if( is_array($stripslashes) and in_array($key, $stripslashes) ){
+					$$key = $this->removeslashes( get_option($key) );
+				} else {
+					$$key = get_option($key);
+				}
+			}
+		}
 		
-		$captcha_on_admin_login = get_option('captcha_on_admin_login');
-		$captcha_on_user_login 	= get_option('captcha_on_user_login');
-		$nonce_check_on_login 	= get_option('nonce_check_on_login');
-		
-		$custom_style_afo = stripslashes(get_option('custom_style_afo'));
-		
-		$login_sidebar_widget_from_email 	= get_option('login_sidebar_widget_from_email');
-		$forgot_password_link_mail_subject 	= stripslashes(get_option('forgot_password_link_mail_subject'));
-		$forgot_password_link_mail_body 	= stripslashes(get_option('forgot_password_link_mail_body'));
-		$new_password_mail_subject 			= stripslashes(get_option('new_password_mail_subject'));
-		$new_password_mail_body 			= stripslashes(get_option('new_password_mail_body'));
+		$custom_style_ap = $this->removeslashes(get_option('custom_style_ap'));
 		
 		echo '<div class="wrap">';
 		$lmc->show_message();
@@ -86,8 +79,8 @@ class login_settings {
 		self :: wp_register_profile_add();
 	
 		form_class::form_open();
-		wp_nonce_field('login_widget_afo_action','login_widget_afo_field');
-		form_class::form_input('hidden','option','','login_widget_afo_save_settings');
+		wp_nonce_field('login_widget_ap_action','login_widget_ap_field');
+		form_class::form_input('hidden','option','','login_widget_ap_save_settings');
 		include( LSW_DIR_PATH . '/view/admin/settings.php');
 		form_class::form_close();
 		
@@ -95,13 +88,13 @@ class login_settings {
 		echo '</div>';
 	}
 		
-	public function login_widget_afo_menu () {
-		add_menu_page( 'Login Widget', 'Login Widget Settings', 'activate_plugins', 'login_widget_afo', array( $this,'login_widget_afo_options' ));
+	public function login_widget_ap_menu () {
+		add_menu_page( 'Login Widget', 'Login Widget Settings', 'activate_plugins', 'login_widget_ap', array( $this,'login_widget_ap_options' ));
 	}
 	
 	public function load_settings(){
-		add_action( 'admin_menu' , array( $this, 'login_widget_afo_menu' ) );
-		add_action( 'admin_init', array( $this, 'login_widget_afo_save_settings' ) );
+		add_action( 'admin_menu' , array( $this, 'login_widget_ap_menu' ) );
+		add_action( 'admin_init', array( $this, 'login_widget_ap_save_settings' ) );
 	}
 	
 	private static function wp_register_profile_add(){

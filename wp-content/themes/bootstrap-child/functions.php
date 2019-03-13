@@ -87,7 +87,7 @@ add_action( 'after_setup_theme', 'bootstrap_child_theme_setup' );
 add_filter('body_class','bootstrap_child_add_class');
 
 function bootstrap_child_add_class( $classes ) {
-  //$post_id = get_the_ID();
+  $post_id = get_the_ID();
   $user_id = get_current_user_id();
   if ($user_id > 0) {
     $id = "user_" . $user_id;
@@ -95,6 +95,10 @@ function bootstrap_child_add_class( $classes ) {
     if (empty($variables)) {
       $classes[] = 'hide-print-survey';
     }
+  }
+
+  if ($post_id == '2342') {
+    $classes[] = 'contact-form';
   }
   return $classes;
 }
@@ -106,7 +110,7 @@ function bootstrap_child_add_class( $classes ) {
  */
 function get_current_year_with_copyright_symbol() {
   $current_date = getdate();
-  return '<span>&copy ' . $current_date["year"] . '</span>';
+  return '<span>&copy; ' . $current_date["year"] . '</span>';
 }
   
 add_shortcode('current_year_with_copyright_symbol', 'get_current_year_with_copyright_symbol');
@@ -153,6 +157,23 @@ function bootstrap_child_get_countries(){
   return $countries;
 }
 
+
+add_filter('bootstrap_child_dynamicselect_themes','bootstrap_child_dynamicselect_get_themes',10,2);
+
+function bootstrap_child_dynamicselect_get_themes(){
+  $themes = array();
+  $terms = get_terms( array(
+      'taxonomy' => 'theme_category',
+      'hide_empty' => true,
+      'orderby' => 'name',
+      'order' => 'ASC' 
+  ) );
+  foreach ($terms as $key=>$term) {
+    $themes[$term->name] = $term->name;
+  }
+  return $themes;
+}
+
 function bootstrap_child_get_themes(){
   $themes = array();
   $terms = get_terms( array(
@@ -170,6 +191,23 @@ function bootstrap_child_get_themes(){
   return $themes;
 }
 
+function bootstrap_child_get_scales(){
+  $scales = array();
+  $terms = get_terms( array(
+      'taxonomy' => 'scale_category',
+      'hide_empty' => true,
+      'orderby' => 'name',
+      'order' => 'ASC' 
+  ) );
+  foreach ($terms as $key=>$term) {
+    $scales[] = array(
+      'id' => $term->term_id,
+      'name' => $term->name,
+    );
+  }
+  return $scales;
+}
+
 function bootstrap_child_get_themes_option($default = []){
   $result = '';
   $themes = bootstrap_child_get_themes();
@@ -180,6 +218,35 @@ function bootstrap_child_get_themes_option($default = []){
   }
 
   return $result;
+}
+
+function bootstrap_child_get_scales_option($default = []){
+  $result = '';
+  $scales = bootstrap_child_get_scales();
+  if (!empty($scales)) {
+    foreach ($scales as $key => $scale) {
+      $result.= '<option ' . (in_array($scale['id'], $default) ? 'selected ': '') . 'value="' . $scale['id'] . '">' . $scale['name'] . '</option>';
+    }
+  }
+
+  return $result;
+}
+
+
+add_filter('bootstrap_child_dynamicselect_countries','bootstrap_child_dynamicselect_get_countries',10,2);
+
+function bootstrap_child_dynamicselect_get_countries(){
+  $countries = array();
+  $terms = get_terms( array(
+      'taxonomy' => 'country_category',
+      'hide_empty' => true,
+      'orderby' => 'name',
+      'order' => 'ASC' 
+  ) );
+  foreach ($terms as $key=>$term) {
+    $countries[$term->name] = $term->name;
+  }
+  return $countries;
 }
 
 function bootstrap_child_get_countries_option($default = []){
@@ -198,8 +265,20 @@ function bootstrap_child_get_sort_option($default = ''){
   $result = '';
   $options = [
     [
-      'id' => 'name',
-      'name' => __('Name', 'bootstrap-child')
+      'id' => 'theme',
+      'name' => __('Theme', 'bootstrap-child')
+    ],
+    [
+      'id' => 'year',
+      'name' => __('Year', 'bootstrap-child')
+    ],
+    [
+      'id' => 'name_asc',
+      'name' => __('Name (A-Z)', 'bootstrap-child')
+    ],
+    [
+      'id' => 'name_desc',
+      'name' => __('Name (Z-A)', 'bootstrap-child')
     ]
   ];
 
@@ -404,4 +483,118 @@ function bootstrap_child_custom_pagination($param, $total, $current, $prev_text,
   }
 
   return $output;
+}
+
+//add_action( 'save_post_variable', 'bootstrap_child_save_variable', 10, 3 );
+function bootstrap_child_save_variable( $post_ID, $post, $update ){
+  $post_type = get_post_type($post_ID);
+  if ($post_type != 'variable') {
+    return;
+  }
+  else{
+    $response = get_field('response', $post_ID);
+    $min_year = '';
+    $max_year = '';
+
+    if (!empty($response)) {
+      foreach ($response as $key => $item) {
+        if (empty($min_year)) {
+          $min_year = $item['year'];
+        }
+        if (empty($max_year)) {
+          $max_year = $item['year'];
+        }
+
+        if ($min_year > $item['year']) {
+          $min_year = $item['year'];
+        }
+
+        if ($max_year < $item['year']) {
+          $max_year = $item['year'];
+        }
+      }
+    }
+
+    update_post_meta($post_ID, 'min_year', $min_year);
+    update_post_meta($post_ID, 'max_year', $max_year);
+  }
+}
+
+function bootstrap_child_set_min_year( $value, $post_id, $field  ) {
+  $response = get_field('response', $post_id);
+  $min_year = $value;
+
+  if (!empty($response)) {
+    foreach ($response as $key => $item) {
+      if (empty($min_year)) {
+        $min_year = $item['year'];
+      }
+
+      if ($min_year > $item['year']) {
+        $min_year = $item['year'];
+      }
+    }
+  }
+  
+  return $min_year;
+}
+
+add_filter('acf/update_value/name=min_year', 'bootstrap_child_set_min_year', 10, 3);
+
+function bootstrap_child_set_max_year( $value, $post_id, $field  ) {
+  $response = get_field('response', $post_id);
+  $max_year = $value;
+
+  if (!empty($response)) {
+    foreach ($response as $key => $item) {
+      if (empty($max_year)) {
+        $max_year = $item['year'];
+      }
+
+      if ($max_year < $item['year']) {
+        $max_year = $item['year'];
+      }
+    }
+  }
+  
+  return $max_year;
+}
+
+add_filter('acf/update_value/name=max_year', 'bootstrap_child_set_max_year', 10, 3);
+
+function bootstrap_child_get_country_resource_id($term_id){
+  $country_resource_id = null;
+
+  $args = [
+    'posts_per_page' => -1,
+    'post_type'      => 'country_resource',
+    'post_status'    => 'publish',
+    'meta_key'       => 'country',
+    'meta_value'     => $term_id,
+  ];
+
+  $query = new WP_Query( $args );
+  $country_resource = $query->posts;
+
+  if (!empty($country_resource)) {
+    $country_resource_id = $country_resource[0]->ID;
+  }
+
+  return $country_resource_id;
+}
+
+function bootstrap_child_redirect_to_login_if_not_login(){
+  $redirect = true;
+
+  if( is_user_logged_in() ) {
+    $user = wp_get_current_user();
+    if (in_array("administrator", $user->roles) || in_array("promundo", $user->roles)) {
+      $redirect = false;
+    }
+  }
+
+  if ($redirect) {
+    wp_redirect( 'login' );
+    exit;
+  }
 }

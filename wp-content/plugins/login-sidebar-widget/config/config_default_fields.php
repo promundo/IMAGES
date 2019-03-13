@@ -8,16 +8,16 @@ $lsw_default_options_data = array(
 'redirect_page_url' => array( 'sanitization' => 'sanitize_text_field' ),
 'logout_redirect_page' => array( 'sanitization' => 'sanitize_text_field' ),
 'link_in_username' => array( 'sanitization' => 'sanitize_text_field' ),
-'login_afo_rem' => array( 'sanitization' => 'sanitize_text_field' ),
-'login_afo_forgot_pass_link' => array( 'sanitization' => 'sanitize_text_field' ),
-'login_afo_forgot_pass_page_url' => array( 'sanitization' => 'sanitize_text_field' ),
-'login_afo_register_link' => array( 'sanitization' => 'sanitize_text_field' ),
-'login_afo_register_page_url' => array( 'sanitization' => 'sanitize_text_field' ),
+'login_ap_rem' => array( 'sanitization' => 'sanitize_text_field' ),
+'login_ap_forgot_pass_link' => array( 'sanitization' => 'sanitize_text_field' ),
+'login_ap_forgot_pass_page_url' => array( 'sanitization' => 'sanitize_text_field' ),
+'login_ap_register_link' => array( 'sanitization' => 'sanitize_text_field' ),
+'login_ap_register_page_url' => array( 'sanitization' => 'sanitize_text_field' ),
 
 // messages
-'lafo_invalid_username' => array( 'sanitization' => 'sanitize_text_field' ),
-'lafo_invalid_email' => array( 'sanitization' => 'sanitize_text_field' ),
-'lafo_invalid_password' => array( 'sanitization' => 'sanitize_text_field' ),
+'lap_invalid_username' => array( 'sanitization' => 'sanitize_text_field' ),
+'lap_invalid_email' => array( 'sanitization' => 'sanitize_text_field' ),
+'lap_invalid_password' => array( 'sanitization' => 'sanitize_text_field' ),
 
 // security 
 'captcha_on_admin_login' => array( 'sanitization' => 'sanitize_text_field' ),

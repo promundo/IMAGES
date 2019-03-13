@@ -1,7 +1,7 @@
 <wpml-config>
   <admin-texts>
-    <key name="lafo_invalid_username"/>
-    <key name="lafo_invalid_password"/>
+    <key name="lap_invalid_username"/>
+    <key name="lap_invalid_password"/>
     <key name="forgot_password_link_mail_subject"/>
     <key name="forgot_password_link_mail_body"/>
     <key name="new_password_mail_subject"/>

@@ -10,6 +10,11 @@
           <?php echo bootstrap_child_get_themes_option(); ?>
         </select>
     </div>
+<!--     <div class="form-item col-md-4">
+        <select name="scale[]" multiple="multiple" id="scale-select" class="form-select">
+          <?php echo bootstrap_child_get_scales_option(); ?>
+        </select>
+    </div> -->
     <div class="form-item col-md-6">
         <select name="country[]" multiple="multiple" id="country-select" class="form-select">
           <?php echo bootstrap_child_get_countries_option(); ?>

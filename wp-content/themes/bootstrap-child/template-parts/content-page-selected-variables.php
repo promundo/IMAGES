@@ -16,9 +16,14 @@ if ($user_id > 0) {
 }
 ?> 
 <article id="post-<?php the_ID(); ?>" <?php post_class('selected-variables'); ?>>
+  <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
   <header class="entry-header">
     <h1 class="entry-title"><?php the_title(); ?></h1>
-    <span data-user-id="<?php echo $user_id;?>" class="export-csv">Export to csv</span>
+    <div class="buttons">
+      <a href="<?php echo get_permalink(177); ?>" ><?php echo __('Print the Survey', 'bootstrap-child'); ?></span>
+      <a href="" data-user-id="<?php echo $user_id;?>" class="export-csv"><?php echo __('Download CSV', 'bootstrap-child'); ?></a>
+    </div>
+    
   </header>
 
   <div class="entry-content">
@@ -27,7 +32,7 @@ if ($user_id > 0) {
         <input type="checkbox" id="select-all" name="select-all">
         <label for="select-all"><?php echo __('Select All', 'bootstrap-child'); ?></label>
       </div>
-      <a class="remove-all" href=""><?php echo __('Remove All', 'bootstrap-child'); ?></a>
+      <a class="remove-all" href=""><?php echo __('Remove Selected', 'bootstrap-child'); ?></a>
     </div>
     <table class="responsive-table variable-edit-table">
       <thead>

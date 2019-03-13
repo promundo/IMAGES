@@ -415,10 +415,14 @@
 }*/
 
 .theme-container,
+.scale-container,
 .country-container,
 .year-container{
   z-index: 100;
   position: relative;
+  &.show{
+    z-index: 200;
+  }
   .dropdown-toggle{
     position: relative;
     width: 100%;
@@ -605,7 +609,8 @@
 .year-container{
   z-index: 90;
 }
-.theme-container{
+.theme-container,
+.scale-container{
   z-index: 110;
   multiselect-container{
     width: 100%;

@@ -7,6 +7,7 @@
   box-shadow: 0 2px 20px 0 rgba(0, 108, 169, 0.06);
   @include bp(xsmall){
     padding: 17px 0;
+    padding: 15px 0;
   }
   h1.site-title-heading{
     margin: 0;
@@ -16,10 +17,13 @@
       line-height: 0;
       text-indent: -9999px;
       display: block;
-      width: 108px;
+      /*width: 108px;
       height: 25px;
       background: url($p-images + 'promundo-logo.svg') no-repeat 0 0;
-      background-size: 100% auto;
+      background-size: 100% auto;*/
+      width: 314px;
+      height: 40px;
+      background: url($p-images + 'logo.png') no-repeat 0 0;
       @include bp(xsmall){
         margin: 0;
       }
@@ -28,7 +32,7 @@
   .navbar{
     margin: 0;
     min-height: 0;
-    padding: 4px 0;
+    padding: 11px 0;
     .navbar-collapse{
       @include bp(xsmall){
         display: -ms-flexbox !important;
@@ -68,6 +72,7 @@
           &:hover{
             opacity: 0.7;
           }
+          &.variables-selected-menu-item,
           &.print-btn{
             display: inline-block;
             background: #f15c25;
@@ -75,7 +80,6 @@
             padding: 10px 15px;
             text-align: center;
             border-radius: 4px;
-            
             @include bp(xsmall){
               margin: -10px 0;
             }
@@ -89,11 +93,21 @@
   }
 }
 
+.single-variable .page-header .navbar .navbar-nav li.print-btn,
 .hide-print-survey .page-header .navbar .navbar-nav li.print-btn{
   margin-left: -13px;
   width: 0;
   overflow: hidden;
   padding: 0;
+  height: 0;
+}
+
+.home .page-header .navbar .navbar-nav li.print-btn,
+.home .page-header .navbar .navbar-nav li.variables-selected-menu-item{
+  width: 0;
+  overflow: hidden;
+  padding: 0;
+  height: 0;
 }
 
 #hero{

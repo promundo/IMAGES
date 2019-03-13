@@ -1,11 +1,11 @@
 <?php
 //***************************//
-// afo_paginate version 3.1 //
+// ap_paginate version 3.1 //
 //  with custom paged var   //
 //*************************//
 
-if (!class_exists('afo_paginate')) {
-	class afo_paginate{
+if (!class_exists('ap_paginate')) {
+	class ap_paginate{
 		
 		public $per_page = 10;
 				
@@ -26,7 +26,7 @@ if (!class_exists('afo_paginate')) {
 			}
 		}
 		
-		public function afo_paginate_css(){ ?>
+		public function ap_paginate_css(){ ?>
 		<style>.page_list_cont{	clear:both;	} .page-numbers{ margin:2px; padding:0px 4px 2px 4px; text-decoration:none; background-color:#ccc; float:left;} .page-numbers.current{ background-color:#0073AA; color:#fff; } </style>
 		<?php
 		}
@@ -59,14 +59,14 @@ if (!class_exists('afo_paginate')) {
 		}
 	
 		public function paginate(){
-			$this->afo_paginate_css();
+			$this->ap_paginate_css();
 			
 			echo '<div class="page_list_cont">';
 			echo paginate_links( array(
 				'base' => add_query_arg( $this->paged_var, '%#%' ),
 				'format' => '',
-				'prev_text' => __('Prev'),
-				'next_text' => __('Next'),
+				'prev_text' => __('Prev','login-sidebar-widget'),
+				'next_text' => __('Next','login-sidebar-widget'),
 				'total' => $this->total_page,
 				'current' => $this->current_page
 			));

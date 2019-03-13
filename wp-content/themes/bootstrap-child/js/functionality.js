@@ -21,7 +21,7 @@
     $('select[name=sort]').on('change', function(event) {
       event.preventDefault();
       var value = $(this).val();
-      $('input[name=sort_by]').val(value);
+      $('.filter-container .filter-form input[name=sort_by]').val(value);
     });
   }
 
@@ -77,6 +77,11 @@
   }
 
   function initMultipleSelect(){
+    var wpcf7Form = false;
+    if ($('.wpcf7-form').get(0)) {
+      wpcf7Form = true;
+    }
+
     $('#year-select').multiselect({
       templates: {
         button: '<button type="button" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-placeholder">Year: </span><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
@@ -206,11 +211,12 @@
       },
       buttonContainer: '<div class="country-container"></div>',
       buttonText: function(options, select) {
-
+          var text = 'All';
+          if (wpcf7Form) text = 'None';
           if (options.length === 0) {
               var $options_container = $('.country-container').find('.filter-options');
               $options_container.find('.option').remove();
-              return 'All';
+              return text;
           }
           else if (options.length > 2) {
               return $(options[0]).html() + ' + ' + (options.length - 1) + ' more';
@@ -250,8 +256,7 @@
 
           $(container).find('.btn-actions').on('click','a',function(event){
             var class_name = $(this).attr('class');
-            if (class_name == 'cancel') {
-            } else if (class_name == 'submit') {
+            if (class_name == 'submit' && !wpcf7Form) {
               event.stopPropagation();
               $(select).parents('form').find('.form-submit').trigger('click');
             }
@@ -284,11 +289,12 @@
       },
       buttonContainer: '<div class="theme-container"></div>',
       buttonText: function(options, select) {
-
+          var text = 'All';
+          if (wpcf7Form) text = 'None';
           if (options.length === 0) {
               var $options_container = $('.theme-container').find('.filter-options');
               $options_container.find('.option').remove();
-              return 'All';
+              return text;
           }
           else if (options.length > 1) {
               return $(options[0]).html() + ' + ' + (options.length - 1) + ' more';
@@ -328,8 +334,7 @@
 
           $(container).find('.btn-actions').on('click','a',function(event){
             var class_name = $(this).attr('class');
-            if (class_name == 'cancel') {
-            } else if (class_name == 'submit') {
+            if (class_name == 'submit' && !wpcf7Form) {
               event.stopPropagation();
               $(select).parents('form').find('.form-submit').trigger('click');
             }
@@ -339,6 +344,84 @@
       },
       onChange: function(option, checked, select) {
           var $options_container = $('.theme-container').find('.filter-options');
+          if (checked === true) {
+            $options_container.append('<a class="option" href="" data-value="' + $(option).val() + '">' + $(option).html()+'</a>');
+          } else if (checked === false) {
+            $options_container.find('a.option[data-value='+ $(option).val() +']').remove();
+          }
+      },
+      includeResetOption: true,
+      resetText: "Clear all"
+    });
+
+    $('#scale-select').multiselect({
+      templates: {
+        button: '<button type="button" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-placeholder">Scale: </span><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
+        ul: '<div class="multiselect-container dropdown-menu"></div>',
+        filter: '<div class="multiselect-item multiselect-filter"><div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span><input class="form-control multiselect-search" type="text" /></div></div>',
+        filterClearBtn: '<span class="input-group-btn"><button class="btn btn-default multiselect-clear-filter" type="button"><i class="glyphicon glyphicon-remove-circle"></i></button></span>',
+        li: '<li class="multiselect-item"><a tabindex="0"><label></label></a></li>',
+        divider: '<div class="multiselect-item divider"></div>',
+        liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>',
+        resetButton: '<li class="multiselect-reset"><div class="input-group"><a class="btn btn-default btn-block"></a></div></li>'
+      },
+      buttonContainer: '<div class="scale-container"></div>',
+      buttonText: function(options, select) {
+          var text = 'All';
+          if (wpcf7Form) text = 'None';
+          if (options.length === 0) {
+              var $options_container = $('.scale-container').find('.filter-options');
+              $options_container.find('.option').remove();
+              return text;
+          }
+          else if (options.length > 1) {
+              return $(options[0]).html() + ' + ' + (options.length - 1) + ' more';
+          }
+           else {
+               var labels = [];
+               options.each(function() {
+                   if ($(this).attr('label') !== undefined) {
+                       labels.push($(this).attr('label'));
+                   }
+                   else {
+                       labels.push($(this).html());
+                   }
+               });
+               return labels.join(', ') + '';
+           }
+      },
+      onInitialized: function(select, container) {
+          $(container).find('li.multiselect-item').wrapAll('<div class="item-conatiner"><ul class="list"></ul></div>');
+          $(container).find('.multiselect-reset').wrap('<ul class="top-navigation"></ul>');
+          $(container).find('.multiselect-reset').prepend('<div class="filter-options" />');
+          var $options_container =  $(container).find('.filter-options');
+          $(select).find('option:selected').each(function(){
+            var option = this;
+            $options_container.append('<a class="option" href="" data-value="' + $(option).val() + '">' + $(option).html()+'</a>');
+          });
+
+          $options_container.on('click','.option', function(event){
+            var option = this;
+            $(select).multiselect('deselect', $(option).attr('data-value'), true);
+            $(option).remove();
+            event.stopPropagation();
+            event.preventDefault();
+          });
+
+          $(container).find('.item-conatiner').after('<div class="btn-actions"><a class="cancel" href="">Cancel</a><a class="submit" href="">Select</a></div>');
+
+          $(container).find('.btn-actions').on('click','a',function(event){
+            var class_name = $(this).attr('class');
+            if (class_name == 'submit' && !wpcf7Form) {
+              event.stopPropagation();
+              $(select).parents('form').find('.form-submit').trigger('click');
+            }
+            
+            event.preventDefault();
+          });
+      },
+      onChange: function(option, checked, select) {
+          var $options_container = $('.scale-container').find('.filter-options');
           if (checked === true) {
             $options_container.append('<a class="option" href="" data-value="' + $(option).val() + '">' + $(option).html()+'</a>');
           } else if (checked === false) {
@@ -359,7 +442,7 @@
   }
 
   function selectVariable(){
-    $('#select-variable').on('click', function(event) {
+    $('.select-variable').on('click', function(event) {
       $('body').addClass('send-ajax');
       showLoader();
       event.preventDefault();
@@ -373,6 +456,7 @@
 
       $.post( myajax.url, ajaxdata, function( response ) {
         $menuItem.text(response + ' Variables Selected');
+        $link.remove();
         $('body').removeClass('send-ajax');
         hideLoader();
       });

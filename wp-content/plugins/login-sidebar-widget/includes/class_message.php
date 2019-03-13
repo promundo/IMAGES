@@ -12,7 +12,7 @@ if(!class_exists('login_message_class')){
 			global $aperror;
 			$aperror = new WP_Error;
 			$aperror->add( "login_message_class", $class );
-			$aperror->add( "login_message_msg", $msg );
+			$aperror->add( "login_message_msg", __($msg,'login-sidebar-widget') );
 		}
 	}
 }

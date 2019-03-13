@@ -1,0 +1,6 @@
+@include bp(retina) {
+  .page-header h1.site-title-heading a{
+    background-image: url($p-images+'logo@2x.png');
+    background-size: 314px auto;
+  }
+}

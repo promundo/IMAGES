@@ -10,18 +10,18 @@
 <?php wp_nonce_field( 'login_widget_action', 'login_widget_field' ); ?>
 <?php } ?>
 
-<input type="hidden" name="option" value="afo_user_login" />
+<input type="hidden" name="option" value="ap_user_login" />
 <input type="hidden" name="redirect" value="<?php echo $this->gen_redirect_url(); ?>" />
 <div class="log-form-group">
 	<label for="userusername"><?php _e('Username','login-sidebar-widget');?> </label>
-	<input type="text" name="userusername" id="userusername" required <?php do_action( 'lwws_userusername_field' );?>/>
+	<input type="text" name="userusername" id="userusername" title="<?php _e('Please enter username','login-sidebar-widget');?>" <?php do_action( 'lwws_userusername_field' );?> required/>
 </div>
 <div class="log-form-group">
 	<label for="userpassword"><?php _e('Password','login-sidebar-widget');?> </label>
-	<input type="password" name="userpassword" id="userpassword" required <?php do_action( 'lwws_userpassword_field' );?>/>
+	<input type="password" name="userpassword" id="userpassword" title="<?php _e('Please enter password','login-sidebar-widget');?>" <?php do_action( 'lwws_userpassword_field' );?> required/>
 </div>
 
-<?php do_action('login_afo_form');?>
+<?php do_action('login_ap_form');?>
 
 <?php do_action('login_form');?>
 

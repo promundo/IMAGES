@@ -10,6 +10,7 @@
 $Bsb4Design = new \BootstrapBasic4\Bsb4Design();
 $post_id = get_the_ID();
 $theme_category_list = get_the_terms( $post_id, 'theme_category');
+$scale_category_list = get_the_terms( $post_id, 'scale_category');
 $question_text = get_field( "question_text" );
 $original_variable_number = get_field( "original_variable_number" );
 $response_options = get_field( "response_options" );
@@ -19,6 +20,11 @@ $notes = [];
 $response = get_field( "response" );
 $languages = [];
 $user = wp_get_current_user();
+
+$selected_variables = [];
+if ($user_id > 0) {
+  $selected_variables = get_field( 'variables', "user_" . $user_id );
+}
 
 if (!empty($response)) {
   foreach ($response as $key => $value) {
@@ -33,6 +39,7 @@ if (!empty($response)) {
 }
 
 $theme_terms = wp_get_post_terms( $post_id, 'theme_category', array('fields' => 'ids'));
+
 $related_variables = [];
 if (!empty($theme_terms)) {
   $args = array(
@@ -60,8 +67,11 @@ if (!empty($theme_terms)) {
         <h1 class="entry-title"><?php the_title(); ?></h1>
         <?php if ( in_array( 'administrator', (array) $user->roles ) || in_array( 'promundo', (array) $user->roles) || in_array( 'public', (array) $user->roles)): ?>
           <div class="links">
-            <a id="select-variable" data-post-id="<?php echo $post_id; ?>" href="#"><?php echo __('Select this variable', 'bootstrap-child'); ?></a>
-            <a href="#" class="print"><?php echo __('Print this page', 'bootstrap-child'); ?></a>
+            <a class="select-variable" data-post-id="<?php echo $post_id; ?>" href="#"><?php echo __('Select this variable', 'bootstrap-child'); ?></a>
+          </div>
+        <?php else: ?>
+          <div class="links">
+            <a class="select-variable-no-login" href="<?php echo home_url('/login')?>"><?php echo __('Select this variable', 'bootstrap-child'); ?></a>
           </div>
         <?php endif; ?>
         
@@ -72,6 +82,13 @@ if (!empty($theme_terms)) {
           <div class="theme-categories">
             <?php foreach ($theme_category_list as $key => $theme_item): ?>
               <?php echo "<span>" . $theme_item->name . "</span>"; ?>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
+        <?php if(!empty($scale_category_list)): ?>
+          <div class="theme-categories">
+            <?php foreach ($scale_category_list as $key => $scale_item): ?>
+              <?php echo "<span>" . $scale_item->name . "</span>"; ?>
             <?php endforeach; ?>
           </div>
         <?php endif; ?>
@@ -130,8 +147,17 @@ if (!empty($theme_terms)) {
               </thead>
               <tbody>
                 <?php foreach($response as $response_item): ?>
+                  <?php $country_resource_id = bootstrap_child_get_country_resource_id($response_item['country']->term_id);
+                    if (is_numeric($country_resource_id)) {
+                      $country = '<a href="' . get_permalink( $country_resource_id ) . '">' . $response_item['country']->name . '</a>';
+                    }
+                    else{
+                      $country = $response_item['country']->name;
+                    }
+                  ?>
+
                   <tr>
-                    <td data-label="Countries"><?php echo isset($response_item['country']->name) ? $response_item['country']->name: ''; ?></td>
+                    <td data-label="Countries"><?php echo $country; ?></td>
                     <td data-label="Year"><?php echo isset($response_item['year']) ? $response_item['year']: ''; ?></td>
                     <td data-label="Language"><?php echo isset($response_item['language']->name) ? $response_item['language']->name: ''; ?></td>
                     <td data-label="Who was asked"><?php echo isset($response_item['who_asked']['value']) ? $response_item['who_asked']['label']: ''; ?></td>
@@ -155,6 +181,7 @@ if (!empty($theme_terms)) {
                 <li><?php echo $language; ?></li>
               <?php endforeach; ?>
             </ul>
+            <p>See the <a href="<?php echo get_permalink(198); ?>">country resource page</a> for the survey in these languages</p>
           </div>
         </div>
       <?php endif; ?>

@@ -10,62 +10,93 @@
 // begins template. -------------------------------------------------------------------------
 get_header('hero');
 
+$sort_by = isset($_REQUEST['sort_by']) ? $_REQUEST['sort_by'] : 'theme';
 $items_per_page = 10;
 $page = isset( $_GET['cpage'] ) ? abs( (int) $_GET['cpage'] ) : 1;
-$offset = ( $page * $items_per_page ) - $items_per_page;
+$user_id = get_current_user_id();
+
+$args = [
+  'solr_integrate' => true,
+  'posts_per_page' => $items_per_page,
+  'post_type'      => 'variable',
+  'post_status'    => 'publish',
+  'paged' => $page
+];
+
+if ($sort_by == 'theme') {
+  $args['meta_key'] = 'theme_weight';
+  $args['orderby'] = 'meta_value_num';
+  $args['order'] = 'ASC';
+}
+
+if ($sort_by == 'year') {
+  $args['meta_key'] = 'max_year';
+  $args['orderby'] = 'meta_value_num';
+  $args['order'] = 'DESC';
+}
+
+if ($sort_by == 'name_asc') {
+  $args['meta_key'] = 'question_text';
+  $args['orderby'] = 'meta_value';
+  $args['order'] = 'ASC';
+}
+if ($sort_by == 'name_desc') {
+  $args['meta_key'] = 'question_text';
+  $args['orderby'] = 'meta_value';
+  $args['order'] = 'DESC';
+}
 
 $key_word = isset($_REQUEST['search']) ? $_REQUEST['search'] : '';
-$theme = isset($_REQUEST['theme']) ? $_REQUEST['theme'] : '';
-$country = isset($_REQUEST['country']) ? $_REQUEST['country'] : '';
-$year = isset($_REQUEST['years']) ? $_REQUEST['years'] : '';
-$sort_by = isset($_REQUEST['sort_by']) ? $_REQUEST['sort_by'] : 'name';
-
-$query_arr['select'] = "SELECT DISTINCT $wpdb->posts.ID FROM $wpdb->posts";
-$query_arr['where'][] = "$wpdb->posts.post_type='variable'";
-
-if (!empty($key_word)) {
-  $query_arr['where'][] = "$wpdb->posts.post_title LIKE '%" . $key_word . "%'";
+if (!empty($_REQUEST['search'])) {
+  $args['s'] = $key_word;
 }
 
-if (!empty($theme)) {
-  $query_arr['join'][] = "LEFT JOIN $wpdb->term_relationships ON($wpdb->posts.ID = $wpdb->term_relationships.object_id)";
-  $query_arr['where'][] = "$wpdb->term_relationships.term_taxonomy_id IN (" . implode(',', $theme) . ")";
-}
-if (!empty($country)) {
-  $query_arr['join'][] = "LEFT JOIN $wpdb->postmeta AS rs ON ($wpdb->posts.ID = rs.post_id)";
-  $query_arr['where'][] = "(rs.meta_key LIKE 'response_%_country' AND rs.meta_value IN (" . implode(',', $country) . "))";
-}
-if (!empty($year)) {
-  $query_arr['join'][] = "LEFT JOIN $wpdb->postmeta AS ry ON ($wpdb->posts.ID = ry.post_id)";
-  $query_arr['where'][] = "(ry.meta_key LIKE 'response_%_year' AND ry.meta_value IN (" . implode(',', $year) . "))";
+if (!empty($_REQUEST['theme'])) {
+  $args['tax_query'] = [
+    'relation' => 'AND',
+    [
+      'taxonomy' => 'theme_category',
+      'field'    => 'term_id',
+      'operator' => 'IN',
+      'terms'    => $_REQUEST['theme'],
+    ]
+  ];
 }
 
-global $wpdb;
-if (!empty($query_arr)) {
-  $query = $query_arr['select'];
-  if (isset($query_arr['join'])) {
-    $query.= ' ' . implode(' ', $query_arr['join']);
-  }
-  if (isset($query_arr['where'])) {
-    $query.= ' WHERE ' . implode(' AND ', $query_arr['where']);
+if (!empty($_REQUEST['country'])) {
+  if (!isset($args['tax_query'])) {
+    $args['tax_query'] = [
+      'relation' => 'AND'
+    ];
   }
 
-  switch ($sort_by) {
-    case 'name':
-      $order = " ORDER BY $wpdb->posts.post_title ASC";
-      break;
-    // case 'year':
-    //   $order = " ORDER BY $wpdb->posts.post_title DESC";
-    //   break;
-  }
-
-  $query.= $order;
+  $args['tax_query'][] = [
+    'taxonomy' => 'country_category',
+    'field'    => 'term_id',
+    'operator' => 'IN',
+    'terms'    => $_REQUEST['country'],
+  ];
 }
 
-$total_query = "SELECT COUNT(1) FROM (${query}) AS combined_table";
-$total = $wpdb->get_var( $total_query );
+if (!empty($_REQUEST['scale'])) {
+  if (!isset($args['tax_query'])) {
+    $args['tax_query'] = [
+      'relation' => 'AND'
+    ];
+  }
 
-$results = $wpdb->get_results( $query . ' LIMIT '. $offset . ', '. $items_per_page);
+  $args['tax_query'][] = [
+    'taxonomy' => 'scale_category',
+    'field'    => 'term_id',
+    'operator' => 'IN',
+    'terms'    => $_REQUEST['scale'],
+  ];
+}
+
+$query = new WP_Query( $args );
+
+$query_total = new WP_Query( $args );
+$total = $query_total->found_posts;
 ?>
 
 <?php
@@ -87,6 +118,7 @@ $results = $wpdb->get_results( $query . ' LIMIT '. $offset . ', '. $items_per_pa
   <div class="container">
     <div class="row">
       <main id="main" class="col-md-12 site-main" role="main">
+        <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
         <div class="header-search-result">
           <div class="count-result">
             <?php echo $total . ' ' . __('Results Matching Criteria', 'bootstrap-child'); ?>
@@ -95,8 +127,8 @@ $results = $wpdb->get_results( $query . ' LIMIT '. $offset . ', '. $items_per_pa
             <label><?php echo __('Sort by', 'bootstrap-child') . ':';?></label>
             <div class="select-wrap">
               <select name="sort">
-                <?php $default_sort = isset($_REQUEST['sort_by']) ? $_REQUEST['sort_by'] : 'name'; ?>
-                <?php echo bootstrap_child_get_sort_option($default_country); ?>
+                <?php $default_sort = isset($_REQUEST['sort_by']) ? $_REQUEST['sort_by'] : 'theme'; ?>
+                <?php echo bootstrap_child_get_sort_option($default_sort); ?>
               </select>
             </div>
           </div>
@@ -108,18 +140,21 @@ $results = $wpdb->get_results( $query . ' LIMIT '. $offset . ', '. $items_per_pa
               <th class="align-right">Years</th>
               <th>Countries</th>
               <th>Theme</th>
+              <th>Scale</th>
+              <?php if ($user_id > 0):?>
+                <th></th>
+              <?php endif; ?>
             </tr>
           </thead>
           <tbody>
-            <?php if(!empty($results)): ?>
-              <?php foreach($results as $post): ?>
-                <?php setup_postdata( $post ); ?>
+            <?php if ( $query->have_posts() ): ?>
+              <?php while ( $query->have_posts() ):?>
+                <?php $query->the_post(); ?>
                 <?php get_template_part( 'template-parts/content', 'variable-search-result' );?>
-              <?php endforeach;?>
-              <?php wp_reset_postdata(); ?>
+              <?php endwhile; ?>
             <?php else: ?>
               <tr>
-                <td class="text-center" colspan="4"><?php echo __('No results', 'bootstrap-child'); ?></td>
+                <td class="text-center" colspan="6"><?php echo __('No results', 'bootstrap-child'); ?></td>
               </tr>
             <?php endif; ?>
           </tbody>

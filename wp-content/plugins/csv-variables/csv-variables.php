@@ -32,18 +32,21 @@ function csv_variables_export_action(){
     $id = "user_" . $user_id;
     $variables = get_field( 'variables', $id );
     if (!empty($variables)) {
-      $data[] = ["INDEX_NAME", "NEW_VARIABLE_NAME", "COUNTRIES FIELDED", "LANGUAGES USED", "YEARS", "QUESTION_STD", "Response Options"];
+      $data[] = ["INDEX_NAME", "NEW_VARIABLE_NAME", "VARIABLE NAME", "COUNTRIES FIELDED", "LANGUAGES USED", "YEARS", "QUESTION_STD", "Response Options", "SCALE", "THEME"];
       foreach ($variables as $key => $variable_id) {
         $value = get_post($variable_id);
         $response = get_field( "response", $variable_id);
         $row = [];
         $row['INDEX_NAME'] = 'FullGEM';
         $row['NEW_VARIABLE_NAME'] = $value->post_title;
+        $row['VARIABLE NAME'] = $value->post_title;
         $row['COUNTRIES'] = '';
         $row['LANGUAGES'] = '';
         $row['YEARS'] = '';
         $row['QUESTION_STD'] = get_field( "question_text", $variable_id);
         $row['response_options'] = '';
+        $row['SCALE'] = '';
+        $row['THEME'] = '';
 
         $response_options = get_field( "response_options", $variable_id);
         if (!empty($response_options)) {
@@ -54,6 +57,16 @@ function csv_variables_export_action(){
           if (!empty($response_options_value)) {
             $row['response_options'] = implode(';', array_unique($response_options_value));
           }
+        }
+
+        $theme_category = wp_get_post_terms( $variable_id, 'theme_category', ['fields' => 'names']);
+        if (!empty($theme_category)) {
+          $row['THEME'] = implode(';', $theme_category);
+        }
+
+        $scale_category = wp_get_post_terms( $variable_id, 'scale_category', ['fields' => 'names']);
+        if (!empty($scale_category)) {
+          $row['SCALE'] = implode(';', $scale_category);
         }
 
         if (!empty($response)) {
@@ -75,13 +88,13 @@ function csv_variables_export_action(){
             }
           }
           if (!empty($country_codes)) {
-            $row['COUNTRIES'] = implode(';', array_unique($country_codes));
+            $row['COUNTRIES'] = implode(';', array_filter(array_unique($country_codes)));
           }
           if (!empty($language)) {
-            $row['LANGUAGES'] = implode(';', array_unique($language));
+            $row['LANGUAGES'] = implode(';', array_filter(array_unique($language)));
           }
           if (!empty($years)) {
-            $row['YEARS'] = implode(';', array_unique($years));
+            $row['YEARS'] = implode(';', array_filter(array_unique($years)));
           }
         }
         if (!empty($row)) {

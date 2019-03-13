@@ -11,25 +11,25 @@ if(!function_exists( 'start_session_if_not_started' )){
 if(!function_exists('get_login_error_message_text')){
 	function get_login_error_message_text( $errors ){	
 		$code = $errors->get_error_code();
-		$lafo_invalid_username = get_option('lafo_invalid_username');
-		$lafo_invalid_email = get_option('lafo_invalid_email');
-		$lafo_invalid_password = get_option('lafo_invalid_password');
+		$lap_invalid_username = get_option('lap_invalid_username');
+		$lap_invalid_email = get_option('lap_invalid_email');
+		$lap_invalid_password = get_option('lap_invalid_password');
 		
 		if($code == 'invalid_username'){
-			if($lafo_invalid_username){
-				$error = $lafo_invalid_username;
+			if($lap_invalid_username){
+				$error = $lap_invalid_username;
 			} else {
 				$error = $errors->get_error_message();
 			}
 		} else if($code == 'invalid_email'){
-			if($lafo_invalid_email){
-				$error = $lafo_invalid_email;
+			if($lap_invalid_email){
+				$error = $lap_invalid_email;
 			} else {
 				$error = $errors->get_error_message();
 			}
 		} else if($code == 'incorrect_password'){
-			if($lafo_invalid_password){
-				$error = $lafo_invalid_password;
+			if($lap_invalid_password){
+				$error = $lap_invalid_password;
 			} else {
 				$error = $errors->get_error_message();
 			}
@@ -49,8 +49,8 @@ if(!function_exists('lsw_login_error_message')){
 	}
 }
 
-if(!function_exists('login_widget_afo_text_domain')){
-	function login_widget_afo_text_domain(){
+if(!function_exists('login_widget_ap_text_domain')){
+	function login_widget_ap_text_domain(){
 		load_plugin_textdomain('login-sidebar-widget', FALSE, basename( dirname( __FILE__ ) ) .'/languages');
 	}
 }

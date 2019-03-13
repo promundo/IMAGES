@@ -3,7 +3,7 @@
 Plugin Name: Login Widget With Shortcode
 Plugin URI: https://wordpress.org/plugins/login-sidebar-widget/
 Description: This is a simple login form in the widget. just install the plugin and add the login widget in the sidebar. Thats it. :)
-Version: 5.8.5
+Version: 6.0.0
 Text Domain: login-sidebar-widget
 Domain Path: /languages
 Author: aviplugins.com
@@ -38,14 +38,14 @@ function plug_install_lsw(){
 	include_once LSW_DIR_PATH . '/includes/class_login_log.php';
 	include_once LSW_DIR_PATH . '/includes/class_paginate.php';
 	include_once LSW_DIR_PATH . '/includes/class_login_form.php';
-	include_once LSW_DIR_PATH . '/login_afo_widget.php';
+	include_once LSW_DIR_PATH . '/login_ap_widget.php';
 	include_once LSW_DIR_PATH . '/process.php';
-	include_once LSW_DIR_PATH . '/login_afo_widget_shortcode.php';
+	include_once LSW_DIR_PATH . '/login_ap_widget_shortcode.php';
 	include_once LSW_DIR_PATH . '/functions.php';
 	
 	new login_settings;
 	new login_scripts;
-	new afo_login_log;
+	new ap_login_log;
 	new ap_login_form;
 }
 
@@ -62,20 +62,22 @@ add_action( 'widgets_init', function(){ register_widget( 'login_wid' ); } );
 add_action( 'init', 'login_validate' );
 add_action( 'init', 'forgot_pass_validate' );
 
-add_shortcode( 'login_widget', 'login_widget_afo_shortcode' );
-add_shortcode( 'forgot_password', 'forgot_password_afo_shortcode' );
+add_shortcode( 'login_widget', 'login_widget_ap_shortcode' );
+add_shortcode( 'forgot_password', 'forgot_password_ap_shortcode' );
 
 add_action( 'admin_init', 'login_log_ip_data');
 
 add_action( 'plugins_loaded', 'security_init' );
 
-add_action( 'plugins_loaded', 'login_widget_afo_text_domain' );
+add_action( 'plugins_loaded', 'login_widget_ap_text_domain' );
 
 add_filter( 'lsw_login_errors', 'lsw_login_error_message', 10, 1 );
 
 add_filter( 'lwws_user_captcha_field', 'lwws_user_captcha_field_no_auto', 10, 1 );
 
 add_filter( 'lwws_admin_captcha_field', 'lwws_user_captcha_field_no_auto', 10, 1 );
+
+add_action( 'template_redirect', 'start_session_if_not_started' );
 
 function lsw_setup_init() {
 	global $wpdb, $forgot_password_link_mail_subject, $forgot_password_link_mail_body, $new_password_mail_subject, $new_password_mail_body;
@@ -98,8 +100,8 @@ function lsw_setup_init() {
     update_option( 'new_password_mail_body', $new_password_mail_body );
 	
 	$lss = new login_settings;
-	if( get_option('custom_style_afo') == '' ){
-		update_option( 'custom_style_afo', $lss->default_style );
+	if( get_option('custom_style_ap') == '' ){
+		update_option( 'custom_style_ap', $lss->default_style );
 	}
 	
 }

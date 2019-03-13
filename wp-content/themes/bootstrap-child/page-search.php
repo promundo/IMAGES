@@ -32,6 +32,7 @@ get_header('hero');
                 <div class="container">
                     <div class="row">
                         <main id="main" class="col-md-12 site-main" role="main">
+                            <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
                             <div id="tabs">
                                 <ul class="tabs">
                                     <li><a href="#themes">Discover All Themes</a></li>

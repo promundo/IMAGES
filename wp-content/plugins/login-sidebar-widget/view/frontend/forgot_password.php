@@ -6,10 +6,10 @@
 
 <form name="forgot" id="forgot" method="post" action="" autocomplete="off" <?php do_action( 'lwws_forgot_password_form_tag' );?>>
 <?php wp_nonce_field( 'login_widget_action', 'login_widget_field' ); ?>
-<input type="hidden" name="option" value="afo_forgot_pass" />
+<input type="hidden" name="option" value="ap_forgot_pass" />
 	<div class="forgot-pass-form-group">
 	<label for="userusername"><?php _e('Email','login-sidebar-widget');?> </label>
-	<input type="email" name="userusername" id="userusername" required <?php do_action( 'lwws_fp_userusername_field' );?>/>
+	<input type="email" name="userusername" id="userusername" title="<?php _e('Please enter correct email','login-sidebar-widget');?>" <?php do_action( 'lwws_fp_userusername_field' );?> required/>
 	</div>
 	
 	<div class="forgot-pass-form-group"><input name="forgot" type="submit" value="<?php _e('Submit','login-sidebar-widget');?>" <?php do_action( 'lwws_forgot_password_form_submit_tag' );?>/></div>

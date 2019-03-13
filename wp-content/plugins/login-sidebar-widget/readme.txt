@@ -3,8 +3,8 @@ Contributors: avimegladon
 Donate link: https://www.aviplugins.com/donate/
 Tags: login, widget, login widget, widget login, sidebar login, login form, user login, authentication, facebook login, twitter login, google login, google plus, facebook, twitter, social login, social media, facebook comments, fb comment, forgot password, reset password, link
 Requires at least: 2.0.2
-Tested up to: 5.0.3
-Stable tag: 5.8.5
+Tested up to: 5.1
+Stable tag: 6.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,7 +60,7 @@ The plugin supports login with <strong>Facebook, Google, Twitter, LinkedIn, Micr
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Go to `Login Widget Settings` and set some optional options. It's really easy.
 4. Go to `Login Widget Settings -> Login Logs` to check the user login log.
-4. Go to `Appearance->Widgets` in available widgets you will find `Login Widget AFO` widget, drag it to chosen widget area where you want it to appear.
+4. Go to `Appearance->Widgets` in available widgets you will find `Login Widget` widget, drag it to chosen widget area where you want it to appear.
 5. You can also use shortcodes to insert login form in post or pages. [login_widget title="Login Here"]
 5. Now visit your site and you will see the user login form.
 
@@ -114,6 +114,9 @@ exit;<br>
 
 
 == Changelog ==
+
+= 6.0.0 = 
+* This is a major update with a lot of structural changes. If you are updating from an older version then some of your plugin settings may be erased, so after update you may have have to resave your plugin settings.
 
 = 5.8.5 = 
 * Option added to disable Nonce check valivation in login form.

@@ -3,12 +3,12 @@
 class ap_login_form{
 	
 	public function __construct() {
-		add_action( 'wp_head', array( $this, 'custom_styles_afo' ) );
+		add_action( 'wp_head', array( $this, 'custom_styles_ap' ) );
 	}
 	 
 	public function add_remember_me(){
-		$login_afo_rem = get_option('login_afo_rem');
-		if($login_afo_rem == 'Yes'){
+		$login_ap_rem = get_option('login_ap_rem');
+		if($login_ap_rem == 'Yes'){
 			include( LSW_DIR_PATH . '/view/frontend/remember_me_input.php');
 		}
 	}
@@ -16,28 +16,28 @@ class ap_login_form{
 	public function add_extra_links(){
 		
 		$fp_url 						= '';
-		$login_afo_forgot_pass_link 	= get_option('login_afo_forgot_pass_link');
-		$login_afo_forgot_pass_page_url = get_option('login_afo_forgot_pass_page_url');
+		$login_ap_forgot_pass_link 	= get_option('login_ap_forgot_pass_link');
+		$login_ap_forgot_pass_page_url = get_option('login_ap_forgot_pass_page_url');
 		
 		$reg_url 						= '';
-		$login_afo_register_link 		= get_option('login_afo_register_link');
-		$login_afo_register_page_url 	= get_option('login_afo_register_page_url');
+		$login_ap_register_link 		= get_option('login_ap_register_link');
+		$login_ap_register_page_url 	= get_option('login_ap_register_page_url');
 		
 		do_action( 'lwws_extra_links_start' );
 		
-		if( $login_afo_forgot_pass_page_url != '' ){
-			$fp_url = esc_url( $login_afo_forgot_pass_page_url ); 
+		if( $login_ap_forgot_pass_page_url != '' ){
+			$fp_url = esc_url( $login_ap_forgot_pass_page_url ); 
 		} else {
-			if( $login_afo_forgot_pass_link != '' ){
-				$fp_url = esc_url( get_permalink($login_afo_forgot_pass_link) ); 
+			if( $login_ap_forgot_pass_link != '' ){
+				$fp_url = esc_url( get_permalink($login_ap_forgot_pass_link) ); 
 			}
 		}
 		
-		if( $login_afo_register_page_url != '' ){
-			$reg_url = esc_url( $login_afo_register_page_url ); 
+		if( $login_ap_register_page_url != '' ){
+			$reg_url = esc_url( $login_ap_register_page_url ); 
 		} else {
-			if( $login_afo_register_link != '' ){
-				$reg_url = esc_url( get_permalink($login_afo_register_link) ); 
+			if( $login_ap_register_link != '' ){
+				$reg_url = esc_url( get_permalink($login_ap_register_link) ); 
 			}
 		}
 		
@@ -124,13 +124,13 @@ class ap_login_form{
 	}
 	
 	public function message_close_button(){
-		$cb = '<span href="javascript:void(0);" onclick="closeMessage();" class="close_button_afo"></span>';
+		$cb = '<span href="javascript:void(0);" onclick="closeMessage();" class="close_button_ap"></span>';
 		return $cb;
 	}
 	
-	public function custom_styles_afo(){
+	public function custom_styles_ap(){
 		echo '<style>';
-		echo stripslashes(get_option('custom_style_afo'));
+		echo stripslashes(get_option('custom_style_ap'));
 		echo '</style>';
 	}
 	

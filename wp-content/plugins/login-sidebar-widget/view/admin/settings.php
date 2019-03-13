@@ -68,8 +68,8 @@
             <td><strong><?php _e('Add Remember Me','login-sidebar-widget');?></strong></td>
             <td>
             <?php 
-            $login_afo_rem_status = ($login_afo_rem == 'Yes'?true:false);
-            form_class::form_checkbox('login_afo_rem','',"Yes",'','','',$login_afo_rem_status);
+            $login_ap_rem_status = ($login_ap_rem == 'Yes'?true:false);
+            form_class::form_checkbox('login_ap_rem','',"Yes",'','','',$login_ap_rem_status);
             ?>
             </td>
           </tr>
@@ -79,16 +79,16 @@
                 <?php
                     $args3 = array(
                     'depth'            => 0,
-                    'selected'         => $login_afo_forgot_pass_link,
+                    'selected'         => $login_ap_forgot_pass_link,
                     'echo'             => 1,
                     'show_option_none' => '-',
-                    'id' 			   => 'login_afo_forgot_pass_link',
-                    'name'             => 'login_afo_forgot_pass_link'
+                    'id' 			   => 'login_ap_forgot_pass_link',
+                    'name'             => 'login_ap_forgot_pass_link'
                     );
                     wp_dropdown_pages( $args3 ); 
                 ?>
                 <?php _e('Or','login-sidebar-widget');?> 
-                <?php form_class::form_input('text','login_afo_forgot_pass_page_url','',esc_url( $login_afo_forgot_pass_page_url ),'','','','','50','',false,'URL');?>
+                <?php form_class::form_input('text','login_ap_forgot_pass_page_url','',esc_url( $login_ap_forgot_pass_page_url ),'','','','','50','',false,'URL');?>
                 <i><?php _e('Leave blank to not include the link','login-sidebar-widget');?></i>
                 </td>
           </tr>
@@ -98,16 +98,16 @@
                 <?php
                     $args4 = array(
                     'depth'            => 0,
-                    'selected'         => $login_afo_register_link,
+                    'selected'         => $login_ap_register_link,
                     'echo'             => 1,
                     'show_option_none' => '-',
-                    'id' 			   => 'login_afo_register_link',
-                    'name'             => 'login_afo_register_link'
+                    'id' 			   => 'login_ap_register_link',
+                    'name'             => 'login_ap_register_link'
                     );
                     wp_dropdown_pages( $args4 ); 
                 ?>
                 <?php _e('Or','login-sidebar-widget');?> 
-                <?php form_class::form_input('text','login_afo_register_page_url','',esc_url( $login_afo_register_page_url ),'','','','','50','',false,'URL');?>
+                <?php form_class::form_input('text','login_ap_register_page_url','',esc_url( $login_ap_register_page_url ),'','','','','50','',false,'URL');?>
                 <i><?php _e('Leave blank to not include the link','login-sidebar-widget');?></i>
                 </td>
           </tr>
@@ -169,7 +169,7 @@
         <tr>
         <td colspan="2">
         <div style="border:1px solid #AEAE00; width:98%; background-color:#FFF; margin:0px auto; padding:10px;">
-        Click <a href="admin.php?page=login_log_afo">here</a> to check the user <strong>Login Log</strong>. Use <strong><a href="https://www.aviplugins.com/fb-login-widget-pro/" target="_blank">PRO</a></strong> version that has added security with <strong>Blocking IP</strong> after 5 wrong login attempts. <strong>Blocked IPs</strong> can be <strong>Whitelisted</strong> from admin panel or the <strong>Block</strong> gets automatically removed after <strong>1 Day</strong>.
+        Click <a href="admin.php?page=login_log_ap">here</a> to check the user <strong>Login Log</strong>. Use <strong><a href="https://www.aviplugins.com/fb-login-widget-pro/" target="_blank">PRO</a></strong> version that has added security with <strong>Blocking IP</strong> after 5 wrong login attempts. <strong>Blocked IPs</strong> can be <strong>Whitelisted</strong> from admin panel or the <strong>Block</strong> gets automatically removed after <strong>1 Day</strong>.
         </div>
         </td>
         </tr>
@@ -191,7 +191,7 @@
           </tr>
           <tr>
             <td valign="top" width="300"><strong><?php _e('Invalid Username Message','login-sidebar-widget');?></strong></td>
-            <td><?php form_class::form_input('text','lafo_invalid_username','',$lafo_invalid_username,'widefat','','','','','',false,__('Error: Invalid Username','login-sidebar-widget'));?>
+            <td><?php form_class::form_input('text','lap_invalid_username','',$lap_invalid_username,'widefat','','','','','',false,__('Error: Invalid Username','login-sidebar-widget'));?>
             <i><?php _e('Error message for wrong Username','login-sidebar-widget');?></i></td>
           </tr>
           <tr>
@@ -200,7 +200,7 @@
           </tr>
           <tr>
             <td valign="top"><strong><?php _e('Invalid Email Message','login-sidebar-widget');?></strong></td>
-            <td><?php form_class::form_input('text','lafo_invalid_email','',$lafo_invalid_email,'widefat','','','','','',false,__('Error: Invalid email address','login-sidebar-widget'));?>
+            <td><?php form_class::form_input('text','lap_invalid_email','',$lap_invalid_email,'widefat','','','','','',false,__('Error: Invalid email address','login-sidebar-widget'));?>
             <i><?php _e('Error message for wrong Email address','login-sidebar-widget');?></i></td>
           </tr>
           <tr>
@@ -209,7 +209,7 @@
           </tr>
           <tr>
             <td valign="top"><strong><?php _e('Invalid Password Message','login-sidebar-widget');?></strong></td>
-            <td><?php form_class::form_input('text','lafo_invalid_password','',$lafo_invalid_password,'widefat','','','','','',false,__('Error: Invalid Username & Password','login-sidebar-widget'));?>
+            <td><?php form_class::form_input('text','lap_invalid_password','',$lap_invalid_password,'widefat','','','','','',false,__('Error: Invalid Username & Password','login-sidebar-widget'));?>
             <i><?php _e('Error message for wrong Password','login-sidebar-widget');?></i></td>
           </tr>
           <tr>
@@ -239,7 +239,7 @@
                 <p><?php _e('Check this and hit the save button to go back to default styling.','login-sidebar-widget');?></p>
                 </td>
                 <td>
-					<?php form_class::form_textarea('custom_style_afo','',$custom_style_afo,'widefat','','','','','','','','height:200px;');?>
+					<?php form_class::form_textarea('custom_style_ap','',$custom_style_ap,'widefat','','','','','','','','height:200px;');?>
                 	
                 </td>
               </tr>
