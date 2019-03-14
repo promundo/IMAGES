@@ -17,6 +17,7 @@ search-replace-db
 *.log
 pa.php
 adminer
+.htaccess
 
 # @TODO writable paths
 wp-content/cache/
