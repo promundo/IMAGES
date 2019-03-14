@@ -35,6 +35,8 @@ if (have_posts()) {
               <th class="align-right">Years</th>
               <th>Countries</th>
               <th>Theme</th>
+              <th>Scale</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>

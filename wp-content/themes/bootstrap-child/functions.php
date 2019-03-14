@@ -588,7 +588,7 @@ function bootstrap_child_redirect_to_login_if_not_login(){
 
   if( is_user_logged_in() ) {
     $user = wp_get_current_user();
-    if (in_array("administrator", $user->roles) || in_array("promundo", $user->roles)) {
+    if (in_array("administrator", $user->roles) || in_array("promundo", $user->roles) || in_array("public", $user->roles)) {
       $redirect = false;
     }
   }

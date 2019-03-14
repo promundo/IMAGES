@@ -455,7 +455,6 @@
       };
 
       $.post( myajax.url, ajaxdata, function( response ) {
-        $menuItem.text(response + ' Variables Selected');
         $link.remove();
         $('body').removeClass('send-ajax');
         hideLoader();
@@ -470,9 +469,7 @@
       nonce_code : myajax.nonce,
     };
 
-    $.post( myajax.url, ajaxdata, function( response ) {
-      $menuItem.text(response + ' Variables Selected');
-    });
+    $.post( myajax.url, ajaxdata, function( response ) {});
   }
 
   function myVariables(){
