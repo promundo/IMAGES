@@ -1,5 +1,3 @@
-FCGIWrapper /usr/local/php72/bin/php-cgi .php
-
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
