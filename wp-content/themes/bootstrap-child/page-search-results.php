@@ -10,7 +10,7 @@
 // begins template. -------------------------------------------------------------------------
 get_header('hero');
 
-$sort_by = isset($_REQUEST['sort_by']) ? $_REQUEST['sort_by'] : 'theme';
+$sort_by = isset($_REQUEST['sort_by']) ? $_REQUEST['sort_by'] : 'scale';
 $items_per_page = 10;
 $page = isset( $_GET['cpage'] ) ? abs( (int) $_GET['cpage'] ) : 1;
 $user_id = get_current_user_id();
@@ -22,6 +22,12 @@ $args = [
   'post_status'    => 'publish',
   'paged' => $page
 ];
+
+if ($sort_by == 'scale') {
+  $args['meta_key'] = 'scale_weight';
+  $args['orderby'] = 'meta_value_num';
+  $args['order'] = 'ASC';
+}
 
 if ($sort_by == 'theme') {
   $args['meta_key'] = 'theme_weight';
@@ -40,6 +46,7 @@ if ($sort_by == 'name_asc') {
   $args['orderby'] = 'meta_value';
   $args['order'] = 'ASC';
 }
+
 if ($sort_by == 'name_desc') {
   $args['meta_key'] = 'question_text';
   $args['orderby'] = 'meta_value';
@@ -127,7 +134,7 @@ $total = $query_total->found_posts;
             <label><?php echo __('Sort by', 'bootstrap-child') . ':';?></label>
             <div class="select-wrap">
               <select name="sort">
-                <?php $default_sort = isset($_REQUEST['sort_by']) ? $_REQUEST['sort_by'] : 'theme'; ?>
+                <?php $default_sort = isset($_REQUEST['sort_by']) ? $_REQUEST['sort_by'] : 'scale'; ?>
                 <?php echo bootstrap_child_get_sort_option($default_sort); ?>
               </select>
             </div>

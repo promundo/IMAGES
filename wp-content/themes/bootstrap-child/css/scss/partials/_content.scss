@@ -417,7 +417,7 @@
       position: absolute;
       top: 10px;
       left: 10px;
-      @include font-size(14);
+      
       @include line-height(18);
       font-family: $f-secondary;
       font-weight: 700;
@@ -446,8 +446,14 @@
   }
   .label{
     display: block;
+    @include font-size(18);
     & + .label{
       margin: 10px 0 0;
+    }
+    &.more{
+      cursor: pointer;
+      @include font-size(14);
+      color: #f15a22;
     }
   }
   .title{
@@ -1335,6 +1341,18 @@
     text-transform: uppercase;
     color: $c-dark-blue;
   }
+  h3{
+    cursor: pointer;
+    margin: 0 0 15px;
+    font-family: $f-primary;
+    font-weight: 700;
+    color: #243c44;
+    @include font-size(14);
+    @include line-height(20);
+    @include bp(medium){
+      margin: 0 0 25px;
+    }
+  }
   .text-item{
     h2{
       position: relative;
@@ -1363,8 +1381,50 @@
   }
   p{
     color: #243c44;
-    @include font-size(16);
+    @include font-size(14);
     @include line-height(20);
+  }
+
+  ul{
+    margin: 0;
+    padding: 0;
+    color: #243c44;
+    list-style: none;
+    @include font-size(14);
+    @include line-height(20);
+    li{
+      position: relative;
+      padding-left: 25px;
+      padding-bottom: 15px;
+      @include bp(medium){
+        padding-bottom: 25px;
+      }
+      &:before{
+        content: "\000B7";
+        padding: 0 10px;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+  }
+  p + ul{
+    margin-top: -5px;
+    @include bp(medium){
+      margin-top: -15px; 
+    }
+  }
+  .images-grid{
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px -10px 5px;
+    @include bp(medium){
+      margin: -10px -10px 15px;
+    }
+    img{
+      margin: 10px;
+    }
   }
   .sidebar-section{
     margin-top: 0;
@@ -1474,7 +1534,7 @@
     border-radius: 4px;
     @include font-size(14);
     @include line-height(22);
-    padding: 11px 10px;
+    padding: 11px 10px !important;
     &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
       opacity: 1;
       color: #94999f;
@@ -1604,4 +1664,28 @@
   text-transform: uppercase;
   font-weight: 600;
   color: $c-blue;
+}
+
+.tablepress{
+  @include font-size(14);
+  @include line-height(18);
+  thead{
+    th{
+      background: #f9f9f9;
+      color: #006288;
+    }
+  }
+  &.second-row{
+    thead th{
+        border-bottom: 0;
+      }
+    .row-2{
+
+      td{
+        background: #f9f9f9;
+        color: #006288;
+        font-weight: bold;
+      }
+    }
+  }
 }

@@ -51,15 +51,25 @@ function variables_update_start_update_ajax($count){
   $post_ids = $wpdb->get_results($wpdb->prepare("SELECT $wpdb->posts.ID FROM $wpdb->posts WHERE $wpdb->posts.post_type = %s ORDER BY $wpdb->posts.ID DESC LIMIT %d,%d", $type, $count, $limit), ARRAY_A);
   if (!empty($post_ids)) {
     foreach ($post_ids as $key => $post) {
-      $term_order = 100;
+      $term_theme_order = 100;
       $theme_category = wp_get_post_terms( $post['ID'], 'theme_category');
       if (!empty($theme_category)) {
         if (isset($theme_category[0]->term_order)) {
-          $term_order = $theme_category[0]->term_order;
+          $term_theme_order = $theme_category[0]->term_order;
         }
       }
 
-      update_field('theme_weight', $term_order, $post['ID']);
+      update_field('theme_weight', $term_theme_order, $post['ID']);
+
+      $term_scale_order = 100;
+      $scale_category = wp_get_post_terms( $post['ID'], 'scale_category');
+      if (!empty($scale_category)) {
+        if (isset($scale_category[0]->term_order)) {
+          $term_scale_order = $scale_category[0]->term_order;
+        }
+      }
+
+      update_field('scale_weight', $term_scale_order, $post['ID']);
 
       $min_year = '';
       $max_year = '';

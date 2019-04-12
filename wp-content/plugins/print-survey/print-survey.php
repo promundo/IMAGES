@@ -12,7 +12,7 @@ function print_survey_export_file($variables, $filename, $user_id){
   $dir = plugin_dir_path( __FILE__ );
   $template = $dir . 'resources/template.docx';
   $upload_dir = wp_get_upload_dir();
-  $resuts = $upload_dir['basedir'] . '/print-survey/' .$user_id . '/'. $filename;
+  $resuts = $upload_dir['basedir'] . '/print-survey/' .$user_id. '/'. $filename;
   $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor($template);
 
 
@@ -153,3 +153,5 @@ function print_survey_export_action(){
   echo json_encode($data);
   wp_die();
 }
+
+

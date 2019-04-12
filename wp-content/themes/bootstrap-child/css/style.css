@@ -1578,8 +1578,6 @@ h5 {
       position: absolute;
       top: 10px;
       left: 10px;
-      font-size: 14px;
-      font-size: 0.875rem;
       line-height: 18px;
       line-height: 1.125rem;
       font-family: "Cabin", sans-serif;
@@ -1605,9 +1603,16 @@ h5 {
     color: #f15a22;
     letter-spacing: 0.5px; }
   .responsive-table .label {
-    display: block; }
+    display: block;
+    font-size: 18px;
+    font-size: 1.125rem; }
     .responsive-table .label + .label {
       margin: 10px 0 0; }
+    .responsive-table .label.more {
+      cursor: pointer;
+      font-size: 14px;
+      font-size: 0.875rem;
+      color: #f15a22; }
   @media only screen and (min-width: 768px) {
     .responsive-table .title {
       width: 50%; } }
@@ -2422,6 +2427,19 @@ h5 {
   line-height: 1.125rem;
   text-transform: uppercase;
   color: #006288; }
+.country_resource h3 {
+  cursor: pointer;
+  margin: 0 0 15px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  color: #243c44;
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 20px;
+  line-height: 1.25rem; }
+  @media only screen and (min-width: 992px) {
+    .country_resource h3 {
+      margin: 0 0 25px; } }
 .country_resource .text-item h2 {
   position: relative;
   display: inline-block;
@@ -2451,10 +2469,47 @@ h5 {
     transform: rotate(0); }
 .country_resource p {
   color: #243c44;
-  font-size: 16px;
-  font-size: 1rem;
+  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 20px;
   line-height: 1.25rem; }
+.country_resource ul {
+  margin: 0;
+  padding: 0;
+  color: #243c44;
+  list-style: none;
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 20px;
+  line-height: 1.25rem; }
+  .country_resource ul li {
+    position: relative;
+    padding-left: 25px;
+    padding-bottom: 15px; }
+    @media only screen and (min-width: 992px) {
+      .country_resource ul li {
+        padding-bottom: 25px; } }
+    .country_resource ul li:before {
+      content: "\000B7";
+      padding: 0 10px;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0; }
+.country_resource p + ul {
+  margin-top: -5px; }
+  @media only screen and (min-width: 992px) {
+    .country_resource p + ul {
+      margin-top: -15px; } }
+.country_resource .images-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -10px -10px 5px; }
+  @media only screen and (min-width: 992px) {
+    .country_resource .images-grid {
+      margin: -10px -10px 15px; } }
+  .country_resource .images-grid img {
+    margin: 10px; }
 .country_resource .sidebar-section {
   margin-top: 0; }
   @media only screen and (min-width: 768px) {
@@ -2548,7 +2603,7 @@ h5 {
     font-size: 0.875rem;
     line-height: 22px;
     line-height: 1.375rem;
-    padding: 11px 10px; }
+    padding: 11px 10px !important; }
     .wpcf7-form input[type=email]::-webkit-input-placeholder,
     .wpcf7-form input[type=text]::-webkit-input-placeholder {
       /* Chrome/Opera/Safari */
@@ -2663,6 +2718,21 @@ h5 {
   text-transform: uppercase;
   font-weight: 600;
   color: #0076C0; }
+
+.tablepress {
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 18px;
+  line-height: 1.125rem; }
+  .tablepress thead th {
+    background: #f9f9f9;
+    color: #006288; }
+  .tablepress.second-row thead th {
+    border-bottom: 0; }
+  .tablepress.second-row .row-2 td {
+    background: #f9f9f9;
+    color: #006288;
+    font-weight: bold; }
 
 .site-footer {
   width: 100%;

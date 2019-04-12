@@ -3,8 +3,8 @@ Contributors: avimegladon
 Donate link: https://www.aviplugins.com/donate/
 Tags: login, widget, login widget, widget login, sidebar login, login form, user login, authentication, facebook login, twitter login, google login, google plus, facebook, twitter, social login, social media, facebook comments, fb comment, forgot password, reset password, link
 Requires at least: 2.0.2
-Tested up to: 5.1
-Stable tag: 6.0.0
+Tested up to: 5.1.1
+Stable tag: 6.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,7 +86,7 @@ exit;<br>
 * Polish translation is provided by Mateusz W&oacute;jcik
 * German translation is provided by Benjamin Hartwich 
 * Hungarian translation is provided by Attila Kiss
-
+* Russian translation is provided by &#1042;&#1083;&#1072;&#1076;&#1080;&#1084;&#1080;&#1088; &#1050;&#1086;&#1084;&#1087;&#1100;&#1102;&#1090;&#1077;&#1088;&#1086;&#1074;
 
 == Frequently Asked Questions ==
 
@@ -114,6 +114,9 @@ exit;<br>
 
 
 == Changelog ==
+
+= 6.0.1 = 
+* Captcha image width increased.
 
 = 6.0.0 = 
 * This is a major update with a lot of structural changes. If you are updating from an older version then some of your plugin settings may be erased, so after update you may have have to resave your plugin settings.

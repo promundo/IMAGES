@@ -17,7 +17,7 @@ $shortcode = get_field( "shortcode" );
         <?php the_content(); ?> 
         <div class="clearfix"></div>
         <?php if (!empty($shortcode)) : ?>
-          <?php print apply_filters('the_content', $shortcode); ?>
+          <?php print do_shortcode($shortcode); ?>
         <?php endif;?>
     </div><!-- .entry-content -->
 </article><!-- #post-## -->

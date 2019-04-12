@@ -47,18 +47,22 @@ if (!empty($response)) {
   </td>
   <td data-label="Years" class="align-right">
     <?php if(!empty($years)): ?>
+      <div class="list-years">
       <?php foreach($years as $year): ?>
         <span class="label"><?php echo $year; ?></span>
       <?php endforeach; ?>
+      </div>
     <?php else: ?>
       &nbsp;
     <?php endif; ?>
   </td>
   <td data-label="Countries">
     <?php if(!empty($countries)): ?>
+      <div class="list-countries">
       <?php foreach($countries as $country): ?>
         <span class="label"><?php echo $country; ?></span>
       <?php endforeach; ?>
+      </div>
     <?php else: ?>
       &nbsp;
     <?php endif; ?>

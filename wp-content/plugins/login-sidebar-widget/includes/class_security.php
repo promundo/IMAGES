@@ -64,11 +64,7 @@ if(!class_exists('login_widget_admin_security')){
 		}
 		
 		public function security_add(){
-			echo '<p><img src="'.plugins_url( LSW_DIR_NAME.'/captcha/captcha.php' ).'" class="captcha" alt="code"></p>
-			<p>
-				<label for="admin_captcha">'.__('Captcha','login-sidebar-widget').'</label><br>
-				'.form_class::form_input('text','admin_captcha','admin_captcha','','input','','','','20','',true,'','',false,'',apply_filters( 'lwws_admin_captcha_field', '' )).'
-			</p>';
+			include( LSW_DIR_PATH . '/view/admin/captcha.php');
 		}
 	
 		public function myplugin_auth_signon( $user, $username, $password ) {
@@ -117,13 +113,8 @@ if(!class_exists('login_widget_admin_security')){
 			return $user;
 		}
 		
-		
 		public function security_add_user(){
-			echo '<div class="log-form-group">
-				<label for="user_captcha">'.__('Captcha','login-sidebar-widget').' </label>
-				<img src="'.plugins_url( LSW_DIR_NAME.'/captcha/captcha.php').'" alt="code" class="captcha">
-				'.form_class::form_input('text','user_captcha','user_captcha','','','','','','','',true,'','',false,'',apply_filters( 'lwws_user_captcha_field', '' )).'
-			</div>';
+			include( LSW_DIR_PATH . '/view/frontend/captcha.php');
 		}
 	}
 }

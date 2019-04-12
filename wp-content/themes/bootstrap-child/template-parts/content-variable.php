@@ -39,9 +39,31 @@ if (!empty($response)) {
 }
 
 $theme_terms = wp_get_post_terms( $post_id, 'theme_category', array('fields' => 'ids'));
+$scale_terms = wp_get_post_terms( $post_id, 'scale_category', array('fields' => 'ids'));
 
+$related_scale = false;
 $related_variables = [];
-if (!empty($theme_terms)) {
+if (!empty($scale_terms)) {
+  $args = array(
+    'post_type' => 'variable',
+    'posts_per_page' => 5,
+    'post__not_in' => [$post_id],
+    'tax_query' => array(
+      array(
+        'taxonomy' => 'scale_category',
+        'field'    => 'term_id',
+        'terms'    => $scale_terms,
+        'operator' => 'IN',
+      ),
+    ),
+  );
+  $query = new WP_Query( $args );
+  if ($query->have_posts()) {
+    $related_scale = true;
+  }
+}
+
+if (!$related_scale && !empty($theme_terms)) {
   $args = array(
     'post_type' => 'variable',
     'posts_per_page' => 5,

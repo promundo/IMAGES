@@ -1,4 +1,4 @@
-<?php $sort_by = isset($_REQUEST['sort_by']) ? $_REQUEST['sort_by'] : 'theme'; ?>
+<?php $sort_by = isset($_REQUEST['sort_by']) ? $_REQUEST['sort_by'] : 'scale'; ?>
 <div class="row">
   <div class="col-md-12">
     <div class="filter-form">

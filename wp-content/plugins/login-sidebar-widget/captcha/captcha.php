@@ -2,7 +2,7 @@
 if(!class_exists('captcha')){
 	class captcha{
 		
-	public $imgWidth = 110;
+	public $imgWidth = 160;
 	public $imgHeight = 40;
 	public $fontSize = 20;
 	public $font = 'fonts/StayPuft.ttf';

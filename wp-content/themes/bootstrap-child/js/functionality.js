@@ -7,10 +7,36 @@
     selectVariable();
     myVariables();
     initSortBy();
+    initCollapse();
   });
 
   function resizeImage(){
     $('#hero .image img').resizeToParent({'parent': '.image'});
+  }
+
+  function initCollapse(){
+    $('.list-countries, .list-years').each(function(){
+    var LiN = $(this).find('.label').length;
+    
+    if( LiN > 3){    
+      $('span', this).eq(2).nextAll().hide().addClass('toggleable');
+      $(this).append('<span class="more label">More...</span>');    
+    }
+    
+  });
+
+
+  $('.list-countries, .list-years').on('click','.more', function(){
+    
+    if( $(this).hasClass('less') ){    
+      $(this).text('More...').removeClass('less');    
+    }else{
+      $(this).text('Less...').addClass('less'); 
+    }
+    
+    $(this).siblings('span.toggleable').slideToggle();
+      
+  }); 
   }
 
   function initTabs(){
@@ -22,6 +48,7 @@
       event.preventDefault();
       var value = $(this).val();
       $('.filter-container .filter-form input[name=sort_by]').val(value);
+      $('.filter-container .filter-form .form-submit').trigger('click');
     });
   }
 

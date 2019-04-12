@@ -265,6 +265,10 @@ function bootstrap_child_get_sort_option($default = ''){
   $result = '';
   $options = [
     [
+      'id' => 'scale',
+      'name' => __('Scale', 'bootstrap-child')
+    ],
+    [
       'id' => 'theme',
       'name' => __('Theme', 'bootstrap-child')
     ],
