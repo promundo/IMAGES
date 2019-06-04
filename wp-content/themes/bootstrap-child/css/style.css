@@ -2548,12 +2548,15 @@ h5 {
     padding: 0;
     list-style: none; }
     .country_resource .sidebar-widget .links li {
+      padding: 0;
       padding-top: 10px;
       font-size: 14px;
       font-size: 0.875rem;
       line-height: 18px;
       line-height: 1.125rem;
       text-transform: uppercase; }
+      .country_resource .sidebar-widget .links li:before {
+        display: none; }
 .country_resource .pdfemb-poweredby {
   display: none; }
 .country_resource .buttons {
