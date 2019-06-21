@@ -9,7 +9,6 @@
 
 
 // begins template. -------------------------------------------------------------------------
-bootstrap_child_redirect_to_login_if_not_login();
 $variables = bootstrap_child_get_survey_variables();
 get_header('hero');
 ?>
@@ -36,7 +35,7 @@ if (have_posts()) {
               <th>Countries</th>
               <th>Theme</th>
               <th>Scale</th>
-              <th></th>
+              <th class="variable-operations"></th>
             </tr>
           </thead>
           <tbody>

@@ -21,7 +21,7 @@
             <td colspan="2"><h3><?php _e('General','login-sidebar-widget');?></h3></td>
           </tr>
           <tr>
-            <td width="300"><strong><?php _e('Login Redirect Page','login-sidebar-widget');?>:</strong></td>
+            <td width="300" valign="top"><strong><?php _e('Login Redirect Page','login-sidebar-widget');?></strong></td>
             <td><?php
                     $args = array(
                     'depth'            => 0,
@@ -29,15 +29,23 @@
                     'echo'             => 1,
                     'show_option_none' => '-',
                     'id' 			   => 'redirect_page',
-                    'name'             => 'redirect_page'
+                    'name'             => 'redirect_page',
+					'class'			   => 'widefat'
                     );
                     wp_dropdown_pages( $args ); 
-                ?> <?php _e('Or','login-sidebar-widget');?> 
-                 <?php form_class::form_input('text','redirect_page_url','',esc_url( $redirect_page_url ),'','','','','50','',false,'URL');?>
+                ?> 
+				<br>
+				<?php _e('Or','login-sidebar-widget');?>
+                <br>
+				<?php form_class::form_input('text','redirect_page_url','',esc_url( $redirect_page_url ),'widefat','','','','','',false,'URL');?>
                 </td>
           </tr>
           <tr>
-            <td><strong><?php _e('Logout Redirect Page','login-sidebar-widget');?>:</strong></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><strong><?php _e('Logout Redirect Page','login-sidebar-widget');?></strong></td>
              <td><?php
                     $args1 = array(
                     'depth'            => 0,
@@ -45,10 +53,15 @@
                     'echo'             => 1,
                     'show_option_none' => '-',
                     'id' 			   => 'logout_redirect_page',
-                    'name'             => 'logout_redirect_page'
+                    'name'             => 'logout_redirect_page',
+					'class'			   => 'widefat'
                     );
                     wp_dropdown_pages( $args1 ); 
                 ?></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
           </tr>
           <tr>
             <td><strong><?php _e('Link in Username','login-sidebar-widget');?></strong></td>
@@ -59,10 +72,15 @@
                     'echo'             => 1,
                     'show_option_none' => '-',
                     'id' 			   => 'link_in_username',
-                    'name'             => 'link_in_username'
+                    'name'             => 'link_in_username',
+					'class'			   => 'widefat'
                     );
                     wp_dropdown_pages( $args2 ); 
                 ?></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
           </tr>
           <tr>
             <td><strong><?php _e('Add Remember Me','login-sidebar-widget');?></strong></td>
@@ -70,11 +88,15 @@
             <?php 
             $login_ap_rem_status = ($login_ap_rem == 'Yes'?true:false);
             form_class::form_checkbox('login_ap_rem','',"Yes",'','','',$login_ap_rem_status);
-            ?>
+            ?><?php _e('Check to Enable','login-sidebar-widget');?>
             </td>
           </tr>
           <tr>
-            <td><strong><?php _e('Forgot Password Link','login-sidebar-widget');?></strong></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td valign="top"><strong><?php _e('Forgot Password Link','login-sidebar-widget');?></strong></td>
             <td>
                 <?php
                     $args3 = array(
@@ -83,17 +105,24 @@
                     'echo'             => 1,
                     'show_option_none' => '-',
                     'id' 			   => 'login_ap_forgot_pass_link',
-                    'name'             => 'login_ap_forgot_pass_link'
+                    'name'             => 'login_ap_forgot_pass_link',
+					'class'			   => 'widefat'
                     );
                     wp_dropdown_pages( $args3 ); 
                 ?>
+                <br>
                 <?php _e('Or','login-sidebar-widget');?> 
-                <?php form_class::form_input('text','login_ap_forgot_pass_page_url','',esc_url( $login_ap_forgot_pass_page_url ),'','','','','50','',false,'URL');?>
+                <br>
+                <?php form_class::form_input('text','login_ap_forgot_pass_page_url','',esc_url( $login_ap_forgot_pass_page_url ),'widefat','','','','','',false,'URL');?>
                 <i><?php _e('Leave blank to not include the link','login-sidebar-widget');?></i>
                 </td>
           </tr>
           <tr>
-            <td><strong><?php _e('Register Link','login-sidebar-widget');?></strong></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td valign="top"><strong><?php _e('Register Link','login-sidebar-widget');?></strong></td>
             <td>
                 <?php
                     $args4 = array(
@@ -102,12 +131,15 @@
                     'echo'             => 1,
                     'show_option_none' => '-',
                     'id' 			   => 'login_ap_register_link',
-                    'name'             => 'login_ap_register_link'
+                    'name'             => 'login_ap_register_link',
+					'class'			   => 'widefat'
                     );
                     wp_dropdown_pages( $args4 ); 
                 ?>
+                <br>
                 <?php _e('Or','login-sidebar-widget');?> 
-                <?php form_class::form_input('text','login_ap_register_page_url','',esc_url( $login_ap_register_page_url ),'','','','','50','',false,'URL');?>
+                <br>
+                <?php form_class::form_input('text','login_ap_register_page_url','',esc_url( $login_ap_register_page_url ),'widefat','','','','','',false,'URL');?>
                 <i><?php _e('Leave blank to not include the link','login-sidebar-widget');?></i>
                 </td>
           </tr>

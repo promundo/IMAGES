@@ -1,8 +1,10 @@
 <?php
+
 class ap_login_log{
 	
 	public function __construct(){
 		add_action( 'admin_menu', array( $this, 'login_log_ap_menu' ) );
+		add_action( 'admin_init', array( $this, 'login_log_ip_data' ) );
 	}
 	
 	public function login_log_ap_menu () {
@@ -17,26 +19,26 @@ class ap_login_log{
 		$data = $ap->initialize($query,@$_REQUEST['paged']);
 		$empty_log_url = wp_nonce_url( "admin.php?page=login_log_ap&action=empty_log", 'empty_login_log', 'trash_log' );
 		
-		echo '<div class="wrap">';
+		login_settings::wrap_start();
 		$lmc->show_message();
 		login_settings::help_support();
         include( LSW_DIR_PATH . '/view/admin/login_log.php');
 		login_settings::donate();
-		echo '</div>';
+		login_settings::wrap_end();
+	}
+	
+	public function login_log_ip_data(){
+		if(isset($_REQUEST['action']) and sanitize_text_field($_REQUEST['action']) == "empty_log"){
+			global $wpdb;
+			if ( ! isset( $_REQUEST['trash_log'] ) || ! wp_verify_nonce( $_REQUEST['trash_log'], 'empty_login_log' ) ) {
+			   wp_die( __('Sorry, your nonce did not verify.','login-sidebar-widget'));
+			} 
+			$lmc = new login_message_class;
+			$wpdb->query("TRUNCATE TABLE ".$wpdb->base_prefix."login_log");
+			$lmc->add_message('Log successfully cleared.','updated');
+			return;
+		}
 	}
 }
 
 
-function login_log_ip_data(){
-	if(isset($_REQUEST['action']) and sanitize_text_field($_REQUEST['action']) == "empty_log"){
-		if ( ! isset( $_REQUEST['trash_log'] ) || ! wp_verify_nonce( $_REQUEST['trash_log'], 'empty_login_log' ) ) {
-		   wp_die( __('Sorry, your nonce did not verify.','login-sidebar-widget'));
-		} 
-			
-		global $wpdb;
-		$lmc = new login_message_class;
-		$wpdb->query("TRUNCATE TABLE ".$wpdb->base_prefix."login_log");
-		$lmc->add_message('Log successfully cleared.','updated');
-		return;
-	}
-}

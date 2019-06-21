@@ -19,12 +19,9 @@ $response_type = get_field( "response_type" );
 $notes = [];
 $response = get_field( "response" );
 $languages = [];
-$user = wp_get_current_user();
 
-$selected_variables = [];
-if ($user_id > 0) {
-  $selected_variables = get_field( 'variables', "user_" . $user_id );
-}
+$session = Session::getInstance();
+$selected_variables = $session->user_variables;
 
 if (!empty($response)) {
   foreach ($response as $key => $value) {
@@ -87,16 +84,11 @@ if (!$related_scale && !empty($theme_terms)) {
       <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
       <header class="entry-header">
         <h1 class="entry-title"><?php the_title(); ?></h1>
-        <?php if ( in_array( 'administrator', (array) $user->roles ) || in_array( 'promundo', (array) $user->roles) || in_array( 'public', (array) $user->roles)): ?>
+        <?php if(!in_array($post_id, $selected_variables)): ?>
           <div class="links">
             <a class="select-variable" data-post-id="<?php echo $post_id; ?>" href="#"><?php echo __('Select this variable', 'bootstrap-child'); ?></a>
           </div>
-        <?php else: ?>
-          <div class="links">
-            <a class="select-variable-no-login" href="<?php echo home_url('/login')?>"><?php echo __('Select this variable', 'bootstrap-child'); ?></a>
-          </div>
         <?php endif; ?>
-        
       </header><!-- .entry-header -->
 
       <div class="entry-content">

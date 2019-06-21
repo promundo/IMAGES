@@ -10,8 +10,7 @@
       var $link = $(this);
       var ajaxdata = {
         action     : 'export-csv-variables',
-        nonce_code : pluginCsvAjax.nonce,
-        user_id    : $link.attr('data-user-id')
+        nonce_code : pluginCsvAjax.nonce
       };
 
       $.post(pluginCsvAjax.url, ajaxdata, function( response ) {

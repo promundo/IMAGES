@@ -37,6 +37,8 @@ class register_settings {
 				}
 			}
 			
+			do_action('wprp_save_settings');
+			
 			$_SESSION['msg'] = 'Plugin data updated successfully.';
 			$_SESSION['msg_class'] = 'updated';
 		}
@@ -57,65 +59,72 @@ class register_settings {
 	}
 	
 	public function register_widget_afo_options () {
-	global $wpdb;
+		global $wpdb;
+		
+		$thank_you_page_after_registration_url = get_option('thank_you_page_after_registration_url');
+		
+		$username_in_registration = get_option( 'username_in_registration' );
+		
+		$password_in_registration = get_option( 'password_in_registration' );
+		
+		$firstname_in_registration = get_option( 'firstname_in_registration' );
+		$firstname_in_profile = get_option( 'firstname_in_profile' );
+		$is_firstname_required = get_option( 'is_firstname_required' );
+		
+		$lastname_in_registration = get_option( 'lastname_in_registration' );
+		$lastname_in_profile = get_option( 'lastname_in_profile' );
+		$is_lastname_required = get_option( 'is_lastname_required' );
+		
+		$displayname_in_registration = get_option( 'displayname_in_registration' );
+		$displayname_in_profile = get_option( 'displayname_in_profile' );
+		$is_displayname_required = get_option( 'is_displayname_required' );
+		
+		$userdescription_in_registration = get_option( 'userdescription_in_registration' );
+		$userdescription_in_profile = get_option( 'userdescription_in_profile' );
+		$is_userdescription_required = get_option( 'is_userdescription_required' );
+		
+		$userurl_in_registration = get_option( 'userurl_in_registration' );
+		$userurl_in_profile = get_option( 'userurl_in_profile' );
+		$is_userurl_required = get_option( 'is_userurl_required' );
+		
+		$wprw_success_msg = $this->removeslashes(get_option( 'wprw_success_msg' ));
+		
+		$wprw_admin_email = get_option( 'wprw_admin_email' );
+		$wprw_from_email = get_option( 'wprw_from_email' );
+		$new_user_register_mail_subject = $this->removeslashes(get_option('new_user_register_mail_subject'));
+		$new_user_register_mail_body = $this->removeslashes(get_option('new_user_register_mail_body'));
+		
+		$captcha_in_registration = get_option( 'captcha_in_registration' );
+		$captcha_in_wordpress_default_registration = get_option( 'captcha_in_wordpress_default_registration' );
+		$force_login_after_registration = get_option( 'force_login_after_registration' );
+		
+		$default_registration_form_hooks = get_option( 'default_registration_form_hooks' );
+		
+		$enable_cfws_newsletter_subscription = get_option( 'enable_cfws_newsletter_subscription' );
+		
+		$this->wrap_start();
+		
+		$this->error_message();
+		
+		$this->help_support();
+		$this->login_sidebar_widget_add();
+		
+		include( WPRPWS_DIR_PATH . '/view/admin/settings.php');
+		
+		$this->wp_register_pro_add();
+		$this->wp_user_subscription_add();
+		
+		$this->donate();
+		
+		$this->wrap_end();
+	}
 	
-	$thank_you_page_after_registration_url = get_option('thank_you_page_after_registration_url');
+	public static function wrap_start(){
+		echo '<div class="wrap">';
+	}
 	
-	$username_in_registration = get_option( 'username_in_registration' );
-	
-	$password_in_registration = get_option( 'password_in_registration' );
-	
-	$firstname_in_registration = get_option( 'firstname_in_registration' );
-	$firstname_in_profile = get_option( 'firstname_in_profile' );
-	$is_firstname_required = get_option( 'is_firstname_required' );
-	
-	$lastname_in_registration = get_option( 'lastname_in_registration' );
-	$lastname_in_profile = get_option( 'lastname_in_profile' );
-	$is_lastname_required = get_option( 'is_lastname_required' );
-	
-	$displayname_in_registration = get_option( 'displayname_in_registration' );
-	$displayname_in_profile = get_option( 'displayname_in_profile' );
-	$is_displayname_required = get_option( 'is_displayname_required' );
-	
-	$userdescription_in_registration = get_option( 'userdescription_in_registration' );
-	$userdescription_in_profile = get_option( 'userdescription_in_profile' );
-	$is_userdescription_required = get_option( 'is_userdescription_required' );
-	
-	$userurl_in_registration = get_option( 'userurl_in_registration' );
-	$userurl_in_profile = get_option( 'userurl_in_profile' );
-	$is_userurl_required = get_option( 'is_userurl_required' );
-	
-	$wprw_success_msg = $this->removeslashes(get_option( 'wprw_success_msg' ));
-	
-	$wprw_admin_email = get_option( 'wprw_admin_email' );
-	$wprw_from_email = get_option( 'wprw_from_email' );
-	$new_user_register_mail_subject = $this->removeslashes(get_option('new_user_register_mail_subject'));
-	$new_user_register_mail_body = $this->removeslashes(get_option('new_user_register_mail_body'));
-	
-	$captcha_in_registration = get_option( 'captcha_in_registration' );
-	$captcha_in_wordpress_default_registration = get_option( 'captcha_in_wordpress_default_registration' );
-	$force_login_after_registration = get_option( 'force_login_after_registration' );
-	
-	$default_registration_form_hooks = get_option( 'default_registration_form_hooks' );
-	
-	$enable_cfws_newsletter_subscription = get_option( 'enable_cfws_newsletter_subscription' );
-	
-	echo '<div class="wrap">';
-	
-	$this->error_message();
-	
-	$this->help_support();
-	$this->login_sidebar_widget_add();
-	
-	include( WPRPWS_DIR_PATH . '/view/admin/settings.php');
-	
-	$this->wp_register_pro_add();
-	$this->wp_user_subscription_add();
-	
-	$this->donate();
-	
-	echo '</div>';
-
+	public static function wrap_end(){
+		echo '</div>';
 	}
 	
 	public function register_widget_afo_menu () {

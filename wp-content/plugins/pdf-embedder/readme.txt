@@ -1,9 +1,9 @@
 ﻿=== PDF Embedder ===
 Contributors: levertechadmin, danlester
 Tags: doc, pdf, pdf viewer, office, google, document, embed, intranet
-Requires at least: 4.0
-Tested up to: 5.0
-Stable tag: 4.0
+Requires at least: 3.5
+Tested up to: 5.2.1
+Stable tag: 4.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -203,9 +203,21 @@ the Plugins section of your Wordpress admin
 
 == Changelog ==
 
-= 5.0 =
+= 4.2 =
 
-Added compatibility for WordPress 5.0 
+Fixed script problem on some Gutenberg editor installations. Improved compatibility
+
+= 4.1 =
+
+Added compatibility for Wordpress 5.2.1
+
+= 4.0 =
+
+Fixed general bug & added compatibility
+
+= 3.2 =
+
+Added compatibility with Gutenberg Editor
 
 = 3.1.8 =
 
@@ -239,6 +251,45 @@ Plugin now respects the SCRIPT_DEBUG flag in wp-config.php and displays non-mini
 Helps debugging any issues.
 
 Added NL language.
+
+== 3.2.1 ==
+
+Added compatibility for WordPress 5.2.1
+
+== 3.2 ==
+
+Added compatibility with Gutenberg Editor
+
+== 3.1.8 ==
+
+Updated version of underlying pdf.js library, fixes some rendering bugs.
+
+Recalculates fresh viewer size more often in response to resize events. Previous versions attempted to increase performance by only recalculating viewer size when it had changed, but this missed some required resizing after Javascript-based tabs are clicked.
+
+Fixed some issues with zoom appearance.
+
+Mouse scroll wheel is now more consistent across all browsers (in terms of scroll speed).
+
+When scrollbars are always visible, no longer cuts off edge of PDF underneath.
+
+== 3.1.2 ==
+
+Ready for compatibility with WordPress 4.8.
+
+New mouse wheel scrolling in Firefox wasn’t working with some themes.
+
+Latest version of pdf.js library, and newest code bringing the free version into line with the premium versions.
+
+Mouse wheel scrolling in Firefox no longer also scrolls the window unless at very top or bottom of page.
+
+== 3.0.1 ==
+
+Latest version of pdf.js library, and newest code bringing the free version into line with the premium versions.
+
+Improved responsiveness and redraw of pages.
+
+Plugin now respects the SCRIPT_DEBUG flag in wp-config.php and displays non-minified versions of the JS files if this is set to true.
+Helps debugging any issues.
 
 = 2.8.2 =
 

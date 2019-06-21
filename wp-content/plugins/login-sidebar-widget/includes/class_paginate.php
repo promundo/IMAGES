@@ -1,4 +1,5 @@
 <?php
+
 //***************************//
 // ap_paginate version 3.1 //
 //  with custom paged var   //

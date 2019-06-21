@@ -1,4 +1,5 @@
 <?php
+
 class login_scripts {
 
 	public function __construct() {

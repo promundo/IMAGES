@@ -1,12 +1,7 @@
 <?php
 $id = get_the_ID();
-
-$user_id = get_current_user_id();
-$selected_variables = [];
-if ($user_id > 0) {
-  $selected_variables = get_field( 'variables', "user_" . $user_id );
-}
-
+$session = Session::getInstance();
+$selected_variables = $session->user_variables;
 $theme_terms = wp_get_post_terms( $id, 'theme_category');
 $scale_terms = wp_get_post_terms( $id, 'scale_category');
 
@@ -85,15 +80,18 @@ if (!empty($response)) {
       &nbsp;
     <?php endif; ?>
   </td>
-  <?php if ($user_id > 0): ?>
-    <td>
+    <td class="variable-operations">
       <?php if(!empty($selected_variables)):?>
         <?php if(!in_array($id, $selected_variables)): ?>
           <a class="select-variable" data-post-id="<?php echo $id;?>" href="#">Select this variable</a>
+          <a class="remove-variable hide-hard" data-post-id="<?php echo $id;?>" href="#">Remove this variable</a>
+        <?php else: ?>
+          <a class="hide-hard select-variable" data-post-id="<?php echo $id;?>" href="#">Select this variable</a>
+          <a class="remove-variable" data-post-id="<?php echo $id;?>" href="#">Remove this variable</a>
         <?php endif;?>
       <?php else: ?>
         <a class="select-variable" data-post-id="<?php echo $id;?>" href="#">Select this variable</a>
+        <a class="remove-variable hide-hard" data-post-id="<?php echo $id;?>" href="#">Remove this variable</a>
       <?php endif;?>
     </td>
-  <?php endif; ?>
 </tr>

@@ -204,6 +204,9 @@ h5 {
 .hide-block {
   display: none; }
 
+.hide-hard {
+  display: none !important; }
+
 #fader {
   width: 100%;
   height: 100%;
@@ -1242,6 +1245,14 @@ h5 {
         padding-bottom: 0; } }
   #main.two-columns .page .image {
     position: relative; }
+    @media only screen and (min-width: 768px) {
+      #main.two-columns .page .image {
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%); } }
     #main.two-columns .page .image img {
       display: block;
       margin: 0 auto 0;
@@ -1253,10 +1264,9 @@ h5 {
     list-style: none; }
     @media only screen and (min-width: 992px) {
       #main.two-columns .page ul.menu {
-        margin-top: 40px;
-        padding-bottom: 80px; } }
+        padding-bottom: 20px; } }
     #main.two-columns .page ul.menu li {
-      margin: 0 0 25px;
+      margin: 0 0 15px;
       position: relative;
       letter-spacing: 0.4px;
       font-size: 14px;
@@ -1565,14 +1575,14 @@ h5 {
     @media only screen and (min-width: 768px) {
       .responsive-table td {
         display: table-cell;
-        padding: 18px 20px;
+        padding: 15px 20px;
         font-size: 16px;
         font-size: 1rem;
         line-height: 22px;
         line-height: 1.375rem; } }
     @media only screen and (min-width: 992px) {
       .responsive-table td {
-        padding: 28px 30px; } }
+        padding: 20px 30px; } }
     .responsive-table td:before {
       content: attr(data-label);
       position: absolute;
@@ -1607,7 +1617,7 @@ h5 {
     font-size: 18px;
     font-size: 1.125rem; }
     .responsive-table .label + .label {
-      margin: 10px 0 0; }
+      margin: 2px 0 0; }
     .responsive-table .label.more {
       cursor: pointer;
       font-size: 14px;
@@ -2535,6 +2545,7 @@ h5 {
       padding: 30px; } }
   .country_resource .sidebar-widget h2 {
     font-family: "Cabin", sans-serif;
+    cursor: default;
     font-weight: 700;
     color: #0076C0;
     font-size: 14px;
@@ -2736,6 +2747,84 @@ h5 {
     background: #f9f9f9;
     color: #006288;
     font-weight: bold; }
+
+.page-template-page-survey .variable-operations {
+  display: none; }
+
+.btn-container {
+  overflow: hidden;
+  width: 100%; }
+  .btn-container .select-all-variable {
+    display: block; }
+    @media only screen and (min-width: 768px) {
+      .btn-container .select-all-variable {
+        float: right; } }
+
+.btn-orange {
+  margin: 0;
+  padding: 10px 15px;
+  display: inline-block;
+  border-radius: 4px;
+  letter-spacing: 0.44px;
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 24px;
+  line-height: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  background: #f15c25; }
+
+.post-password-form label {
+  display: block;
+  font-weight: bold; }
+.post-password-form input[type=password] {
+  width: 100%;
+  max-width: 440px;
+  margin: 20px 0 0 !important;
+  display: block;
+  border: 1px solid #e4e4e4;
+  border-radius: 4px;
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 22px;
+  line-height: 1.375rem;
+  padding: 11px 10px !important; }
+  .post-password-form input[type=password]::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    opacity: 1;
+    color: #94999f; }
+  .post-password-form input[type=password]::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #94999f;
+    opacity: 1; }
+  .post-password-form input[type=password]:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #94999f;
+    opacity: 1; }
+  .post-password-form input[type=password]:-moz-placeholder {
+    /* Firefox 18- */
+    color: #94999f;
+    opacity: 1; }
+.post-password-form input[type=submit] {
+  cursor: pointer;
+  display: block;
+  padding: 11px 10px;
+  min-width: 170px;
+  text-align: center;
+  border: 1px solid #f15a22;
+  border-radius: 4px;
+  background: #f15a22;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.44px;
+  color: #fff;
+  margin: 20px 0 0 0;
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 22px;
+  line-height: 1.375rem; }
 
 .site-footer {
   width: 100%;

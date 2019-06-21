@@ -3,7 +3,7 @@
 Plugin Name: Login Widget With Shortcode
 Plugin URI: https://wordpress.org/plugins/login-sidebar-widget/
 Description: This is a simple login form in the widget. just install the plugin and add the login widget in the sidebar. Thats it. :)
-Version: 6.0.1
+Version: 6.0.4
 Text Domain: login-sidebar-widget
 Domain Path: /languages
 Author: aviplugins.com
@@ -17,17 +17,20 @@ Author URI: https://www.aviplugins.com/
 	  ()-()
 **/
 
-// CONFIG
-
 define( 'LSW_DIR_NAME', 'login-sidebar-widget' );
 define( 'LSW_DIR_PATH', dirname( __FILE__ ) );
 
+// CONFIG
 include_once LSW_DIR_PATH . '/config/config_emails.php';
 include_once LSW_DIR_PATH . '/config/config_default_fields.php';
 
-// CONFIG
-
 function plug_install_lsw(){
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	if ( is_plugin_active( 'fb-login-widget-pro/login.php' ) || is_plugin_active( 'social-login-no-setup/login.php' ) ) {
+	 	wp_die('It seems you have <strong>Facebook Login Widget (PRO)</strong> or <strong>Social Login No Setup</strong> plugin activated. Please deactivate that to continue.');
+		exit;
+	}
+	
 	include_once LSW_DIR_PATH . '/includes/class_settings.php';
 	include_once LSW_DIR_PATH . '/includes/class_scripts.php';
 	include_once LSW_DIR_PATH . '/includes/class_form.php';
@@ -65,8 +68,6 @@ add_action( 'init', 'forgot_pass_validate' );
 add_shortcode( 'login_widget', 'login_widget_ap_shortcode' );
 add_shortcode( 'forgot_password', 'forgot_password_ap_shortcode' );
 
-add_action( 'admin_init', 'login_log_ip_data');
-
 add_action( 'plugins_loaded', 'security_init' );
 
 add_action( 'plugins_loaded', 'login_widget_ap_text_domain' );
@@ -78,32 +79,5 @@ add_filter( 'lwws_user_captcha_field', 'lwws_user_captcha_field_no_auto', 10, 1 
 add_filter( 'lwws_admin_captcha_field', 'lwws_user_captcha_field_no_auto', 10, 1 );
 
 add_action( 'template_redirect', 'start_session_if_not_started' );
-
-function lsw_setup_init() {
-	global $wpdb, $forgot_password_link_mail_subject, $forgot_password_link_mail_body, $new_password_mail_subject, $new_password_mail_body;
-	
-	// log tables //
-	$wpdb->query("CREATE TABLE IF NOT EXISTS `".$wpdb->base_prefix."login_log` (
-	  `id` int(11) NOT NULL AUTO_INCREMENT,
-	  `ip` varchar(50) NOT NULL,
-	  `msg` varchar(255) NOT NULL,
-	  `l_added` datetime NOT NULL,
-	  `l_status` enum('success','failed','blocked') NOT NULL,
-  	  `l_type` enum('new','old') NOT NULL,
-	  PRIMARY KEY (`id`)
-	)");
-	// log tables //
-		
-	update_option( 'forgot_password_link_mail_subject', $forgot_password_link_mail_subject );
-    update_option( 'forgot_password_link_mail_body', $forgot_password_link_mail_body );
-	update_option( 'new_password_mail_subject', $new_password_mail_subject );
-    update_option( 'new_password_mail_body', $new_password_mail_body );
-	
-	$lss = new login_settings;
-	if( get_option('custom_style_ap') == '' ){
-		update_option( 'custom_style_ap', $lss->default_style );
-	}
-	
-}
 
 register_activation_hook( __FILE__, 'lsw_setup_init' );

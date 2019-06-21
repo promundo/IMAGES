@@ -10,10 +10,11 @@
 // begins template. -------------------------------------------------------------------------
 get_header('hero');
 
+$session = Session::getInstance();
+
 $sort_by = isset($_REQUEST['sort_by']) ? $_REQUEST['sort_by'] : 'scale';
 $items_per_page = 10;
 $page = isset( $_GET['cpage'] ) ? abs( (int) $_GET['cpage'] ) : 1;
-$user_id = get_current_user_id();
 
 $args = [
   'solr_integrate' => true,
@@ -104,6 +105,38 @@ $query = new WP_Query( $args );
 
 $query_total = new WP_Query( $args );
 $total = $query_total->found_posts;
+
+if (isset($_REQUEST['select-all-variable'])) {
+  if ($_REQUEST['select-all-variable'] == true && $total > 0) {
+    $all_variable_ids = [];
+    $number_page = ceil($total/100);
+    $args['posts_per_page'] = 100;
+
+    for ($i=1; $i <= $number_page; $i++) { 
+      $args['paged'] = $i;
+      $query_item = new WP_Query( $args );
+      $query_item_post = $query_item->posts;
+      if (!empty($query_item_post)) {
+        foreach ($query_item_post as $key => $post_item) {
+          $all_variable_ids[] = $post_item->ID;
+        }
+      }
+    }
+
+    if (!empty($all_variable_ids)) {
+      $new_selected_variables = $all_variable_ids;
+      $current_selected_variables = $session->user_variables;
+      if (!empty($current_selected_variables)) {
+        $new_selected_variables = array_merge($new_selected_variables, $current_selected_variables);
+        $new_selected_variables = array_unique($new_selected_variables);
+      }
+
+      $session->user_variables = $new_selected_variables;
+    }
+  }
+}
+
+
 ?>
 
 <?php
@@ -125,7 +158,10 @@ $total = $query_total->found_posts;
   <div class="container">
     <div class="row">
       <main id="main" class="col-md-12 site-main" role="main">
-        <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
+        <div class="btn-container">
+          <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
+          <button class="btn-orange select-all-variable"><?php echo __('Select All', 'bootstrap-child'); ?></button>
+        </div>
         <div class="header-search-result">
           <div class="count-result">
             <?php echo $total . ' ' . __('Results Matching Criteria', 'bootstrap-child'); ?>
@@ -148,9 +184,7 @@ $total = $query_total->found_posts;
               <th>Countries</th>
               <th>Theme</th>
               <th>Scale</th>
-              <?php if ($user_id > 0):?>
-                <th></th>
-              <?php endif; ?>
+              <th></th>
             </tr>
           </thead>
           <tbody>

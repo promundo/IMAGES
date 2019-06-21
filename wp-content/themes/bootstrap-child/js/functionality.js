@@ -5,10 +5,24 @@
     resizeImage();
     printPage();
     selectVariable();
+    removeVariable();
+    initSearchSelectAll();
     myVariables();
     initSortBy();
     initCollapse();
   });
+
+  function initSearchSelectAll(){
+    $('.select-all-variable').on('click', function(event) {
+      event.preventDefault();
+      var $form = $('.filter-form form');
+      var $input = $("<input>")
+               .attr("type", "hidden")
+               .attr("name", "select-all-variable").val(true);
+      $form.append($input);
+      $form.submit();
+    });
+  }
 
   function resizeImage(){
     $('#hero .image img').resizeToParent({'parent': '.image'});
@@ -474,7 +488,6 @@
       showLoader();
       event.preventDefault();
       var $link = $(this);
-      var $menuItem = $('.variables-selected-menu-item.nav-link');
       var ajaxdata = {
         action     : 'select-variable',
         nonce_code : myajax.nonce,
@@ -482,7 +495,29 @@
       };
 
       $.post( myajax.url, ajaxdata, function( response ) {
-        $link.remove();
+        $link.addClass('hide-hard');
+        $link.parent().find('.remove-variable').removeClass('hide-hard');
+        $('body').removeClass('send-ajax');
+        hideLoader();
+      });
+    });
+  }
+
+  function removeVariable(){
+    $('.remove-variable').on('click', function(event) {
+      $('body').addClass('send-ajax');
+      showLoader();
+      event.preventDefault();
+      var $link = $(this);
+      var ajaxdata = {
+        action     : 'remove-variable',
+        nonce_code : myajax.nonce,
+        var_ids    : [$link.attr('data-post-id')]
+      };
+
+      $.post( myajax.url, ajaxdata, function( response ) {
+        $link.addClass('hide-hard');
+        $link.parent().find('.select-variable').removeClass('hide-hard');
         $('body').removeClass('send-ajax');
         hideLoader();
       });

@@ -1,7 +1,7 @@
 <table width="100%" class="ap-table">
  <tr>
     <td><h3><?php _e('Login Logs','login-sidebar-widget');?> </h3></td>
-    <td align="right"><a href="<?php echo $empty_log_url;?>" class="page-title-action"><?php _e('Clear Login Log','login-sidebar-widget');?></a></td>
+    <td align="right"><a href="<?php echo $empty_log_url;?>" class="button"><?php _e('Clear Login Log','login-sidebar-widget');?></a></td>
  </tr>
  
  <tr>
@@ -16,6 +16,7 @@
           </tr>
           <?php 
           $cnt = 1;
+		  if($data){
           foreach ( $data as $d ) { ?>
           <tr style="background-color:<?php echo $cnt%2 == 0?'#F1F1F1':'#FFFFFF';?>;">
             <td><?php echo $d['ip'];?></td>
@@ -23,7 +24,18 @@
             <td><?php echo $d['l_added'];?></td>
             <td><?php echo $d['l_status'];?></td>
           </tr>
-          <?php $cnt++; } ?>
+          <?php $cnt++; }
+		  } else { ?>
+          <tr>
+            <td colspan="4" align="center"><strong><?php _e('No records found','login-sidebar-widget');?></strong></td>
+          </tr>
+          <?php } ?>
+          <tr style="background-color:#0073aa; color:#ffffff;">
+            <td width="30%"><strong><?php _e('IP','login-sidebar-widget');?></strong></td>
+            <td width="30%"><strong><?php _e('Message','login-sidebar-widget');?></strong></td>
+            <td width="20%"><strong><?php _e('Time','login-sidebar-widget');?></strong></td>
+            <td width="20%"><strong><?php _e('Status','login-sidebar-widget');?></strong></td>
+          </tr>
         </table>
      </div>
       <table width="100%">

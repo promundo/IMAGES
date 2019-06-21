@@ -1,4 +1,5 @@
 <?php
+
 class login_settings {
 
 	public $default_style = '.log_forms { width: 98%; padding: 5px; border: 1px solid #CCC; margin: 2px; box-sizing:border-box; } .log-form-group{ margin: 0px; width: 100%; padding:5px; } .log_forms input[type=text], input[type=password] { width: 100%; padding: 7px 0 7px 4px !important; border: 1px solid #E3E3E3; margin:0px !important; } .log_forms input[type=submit] { width: 100%; padding: 7px; border: 1px solid #7ac9b7; } .log_forms input[type=text]:focus, input[type=password]:focus { border-color: #4697e4; } .lw-error{ color:#ff0000; } input.lw-error{ border:1px solid #ff0000 !important; }';
@@ -42,6 +43,8 @@ class login_settings {
 				update_option( 'custom_style_ap',  sanitize_text_field($_POST['custom_style_ap']) );
 			}
 			
+			do_action('lwws_ap_save_settings');
+			
 			$lmc->add_message('Settings updated successfully.','updated');
 		}
 	}
@@ -49,6 +52,14 @@ class login_settings {
 	public function removeslashes($string){
 		$string=implode("",explode("\\",$string));
 		return stripslashes(trim($string));
+	}
+	
+	public static function wrap_start(){
+		echo '<div class="wrap">';
+	}
+	
+	public static function wrap_end(){
+		echo '</div>';
 	}
 
 	public function login_widget_ap_options () {
@@ -70,7 +81,7 @@ class login_settings {
 		
 		$custom_style_ap = $this->removeslashes(get_option('custom_style_ap'));
 		
-		echo '<div class="wrap">';
+		$this->wrap_start();
 		$lmc->show_message();
 	
 		self :: fb_login_pro_add();
@@ -85,7 +96,7 @@ class login_settings {
 		form_class::form_close();
 		
 		self :: donate(); 
-		echo '</div>';
+		$this->wrap_end();
 	}
 		
 	public function login_widget_ap_menu () {

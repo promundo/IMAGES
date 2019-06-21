@@ -83,6 +83,10 @@
     }
     .image{
       position: relative;
+      @include bp(small){
+        top: 50%;
+        @include transform(translateY(-50%));
+      }
       img{
         display: block;
         margin: 0 auto 0;
@@ -95,11 +99,11 @@
       padding: 20px 0 0;
       list-style: none;
       @include bp(medium){
-        margin-top: 40px;
-        padding-bottom: 80px;
+        //margin-top: 40px;
+        padding-bottom: 20px;
       }
       li{
-        margin: 0 0 25px;
+        margin: 0 0 15px;
         position: relative;
         letter-spacing: 0.4px;
         @include font-size(14);
@@ -404,13 +408,13 @@
     color: #243c44;
     @include bp(small){
       display: table-cell;
-      padding: 18px 20px;
+      padding: 15px 20px;
       @include font-size(16);
       @include line-height(22);
       
     }
     @include bp(medium){
-      padding: 28px 30px;
+      padding: 20px 30px;
     }
     &:before{
       content: attr(data-label);
@@ -448,7 +452,7 @@
     display: block;
     @include font-size(18);
     & + .label{
-      margin: 10px 0 0;
+      margin: 2px 0 0;
     }
     &.more{
       cursor: pointer;
@@ -1454,6 +1458,7 @@
     }
     h2{
       font-family: $f-secondary;
+      cursor: default;
       font-weight: 700;
       color: $c-blue;
       @include font-size(14);
@@ -1691,5 +1696,85 @@
         font-weight: bold;
       }
     }
+  }
+}
+.page-template-page-survey{
+  .variable-operations{
+    display: none;
+  }
+}
+.btn-container{
+  overflow: hidden;
+  width: 100%;
+  .select-all-variable{
+    display: block;
+    @include bp(small){
+      float: right;
+    }
+  }
+}
+.btn-orange{
+  margin: 0;
+  padding: 10px 15px;
+  display: inline-block;
+  border-radius: 4px;
+  letter-spacing: 0.44px;
+  @include font-size(14);
+  @include line-height(24);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  background: #f15c25;
+}
+
+.post-password-form{
+  label{
+    display: block;
+    font-weight: bold;
+  }
+  input[type=password]{
+    width: 100%;
+    max-width: 440px;
+    margin: 20px 0 0 !important;
+    display: block;
+    border: 1px solid #e4e4e4;
+    border-radius: 4px;
+    @include font-size(12);
+    @include line-height(22);
+    padding: 11px 10px !important;
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      opacity: 1;
+      color: #94999f;
+    }
+    &::-moz-placeholder { /* Firefox 19+ */
+      color: #94999f;
+      opacity: 1;
+    }
+    &:-ms-input-placeholder { /* IE 10+ */
+      color: #94999f;
+      opacity: 1;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+      color: #94999f;
+      opacity: 1;
+    }
+  }
+  input[type=submit]{
+    cursor: pointer;
+    display: block;
+    padding: 11px 10px;
+    min-width: 170px;
+    text-align: center;
+    border: 1px solid #f15a22;
+    border-radius: 4px;
+    background: #f15a22;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.44px;
+    color: #fff;
+    margin: 20px 0 0 0; 
+    @include font-size(14);
+    @include line-height(22);
   }
 }

@@ -40,7 +40,7 @@ form_class::form_input('hidden','option','','register_widget_afo_save_settings')
           </tr>
           <tr style="background-color:#FFFFFF;">
             <td><strong><?php _e('User Name', 'wp-register-profile-with-shortcode');?></strong></td>
-            <td align="center"><?php  form_class::form_checkbox('','','','','','',true,true);?></td>
+            <td><?php form_class::form_checkbox('','','','','','',true,true);?> <?php _e('Check to enable', 'wp-register-profile-with-shortcode');?></td>
             <td>
             <label>
             <?php 
@@ -53,13 +53,13 @@ form_class::form_input('hidden','option','','register_widget_afo_save_settings')
           </tr>
           <tr style="background-color:#F1F1F1;">
             <td><strong><?php _e('User Email', 'wp-register-profile-with-shortcode');?></strong></td>
-            <td align="center"><?php  form_class::form_checkbox('','','','','','',true,true);?></td>
+            <td><?php  form_class::form_checkbox('','','','','','',true,true);?> <?php _e('Check to enable', 'wp-register-profile-with-shortcode');?></td>
             <td><span><?php _e('This field is required and cannot be removed.', 'wp-register-profile-with-shortcode');?></span></td>
             <td><span><?php _e('This field can be updated.', 'wp-register-profile-with-shortcode');?></span></td>
           </tr>
           <tr style="background-color:#FFFFFF;">
             <td><strong><?php _e('Password Field', 'wp-register-profile-with-shortcode');?> </strong></td>
-            <td align="center"><?php  form_class::form_checkbox('','','','','','',true,true);?></td>
+            <td><?php  form_class::form_checkbox('','','','','','',true,true);?> <?php _e('Check to enable', 'wp-register-profile-with-shortcode');?></td>
             <td>
 			<label>
 			<?php 
@@ -72,12 +72,12 @@ form_class::form_input('hidden','option','','register_widget_afo_save_settings')
           </tr>
           <tr style="background-color:#F1F1F1;">
             <td><strong><?php _e('First Name', 'wp-register-profile-with-shortcode');?> </strong></td>
-            <td align="center">
+            <td>
 			<label>
 			<?php 
             $is_firstname_required_status = ($is_firstname_required == 'Yes'?true:false);
             form_class::form_checkbox('is_firstname_required','',"Yes",'','','',$is_firstname_required_status);
-            ?>
+            ?> <?php _e('Check to enable', 'wp-register-profile-with-shortcode');?>
             </label>
             </td>
             <td>
@@ -100,11 +100,14 @@ form_class::form_input('hidden','option','','register_widget_afo_save_settings')
           <tr style="background-color:#FFFFFF;">
             <td>
             <strong><?php _e('Last Name', 'wp-register-profile-with-shortcode');?> </strong></td>
-            <td align="center">
+            <td>
+            <label>
 			<?php 
             $is_lastname_required_status = ($is_lastname_required == 'Yes'?true:false);
             form_class::form_checkbox('is_lastname_required','',"Yes",'','','',$is_lastname_required_status);
             ?>
+            <?php _e('Check to enable', 'wp-register-profile-with-shortcode');?>
+            </label>
             </td>
             <td>
 			<label>
@@ -125,12 +128,12 @@ form_class::form_input('hidden','option','','register_widget_afo_save_settings')
           </tr>
           <tr style="background-color:#F1F1F1;">
             <td><strong><?php _e('Display Name', 'wp-register-profile-with-shortcode');?> </strong></td>
-            <td align="center">
+            <td>
 			<label>
 			<?php 
             $is_displayname_required_status = ($is_displayname_required == 'Yes'?true:false);
             form_class::form_checkbox('is_displayname_required','',"Yes",'','','',$is_displayname_required_status);
-            ?>
+            ?> <?php _e('Check to enable', 'wp-register-profile-with-shortcode');?>
             </label>
             </td>
             <td>
@@ -152,12 +155,12 @@ form_class::form_input('hidden','option','','register_widget_afo_save_settings')
           </tr>
           <tr style="background-color:#FFFFFF;">
             <td><strong><?php _e('About User', 'wp-register-profile-with-shortcode');?> </strong></td>
-            <td align="center">
+            <td>
 			<label>
 			<?php 
             $is_userdescription_required_status = ($is_userdescription_required == 'Yes'?true:false);
             form_class::form_checkbox('is_userdescription_required','',"Yes",'','','',$is_userdescription_required_status);
-            ?>
+            ?> <?php _e('Check to enable', 'wp-register-profile-with-shortcode');?>
             </label>
             </td>
             <td>
@@ -179,10 +182,14 @@ form_class::form_input('hidden','option','','register_widget_afo_save_settings')
           </tr>
           <tr style="background-color:#F1F1F1;">
             <td><strong><?php _e('User Url', 'wp-register-profile-with-shortcode');?></strong></td>
-            <td align="center"><?php 
+            <td>
+			<label>
+			<?php 
             $is_userurl_required_status = ($is_userurl_required == 'Yes'?true:false);
             form_class::form_checkbox('is_userurl_required','',"Yes",'','','',$is_userurl_required_status);
-            ?></td>
+            ?> <?php _e('Check to enable', 'wp-register-profile-with-shortcode');?>
+            </label>
+            </td>
             <td>
 			<label>
 			<?php 

@@ -8,12 +8,9 @@
 
 global $post;
 $Bsb4Design = new \BootstrapBasic4\Bsb4Design();
-$user_id = get_current_user_id();
+$session = Session::getInstance();
+$variables = $session->user_variables;
 
-if ($user_id > 0) {
-  $id = "user_" . $user_id;
-  $variables = get_field( 'variables', $id );
-}
 ?> 
 <article id="post-<?php the_ID(); ?>" <?php post_class('selected-variables'); ?>>
   <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
@@ -21,7 +18,7 @@ if ($user_id > 0) {
     <h1 class="entry-title"><?php the_title(); ?></h1>
     <div class="buttons">
       <a href="<?php echo get_permalink(177); ?>" ><?php echo __('Print the Survey', 'bootstrap-child'); ?></span>
-      <a href="" data-user-id="<?php echo $user_id;?>" class="export-csv"><?php echo __('Download CSV', 'bootstrap-child'); ?></a>
+      <a href="" class="export-csv"><?php echo __('Download CSV', 'bootstrap-child'); ?></a>
     </div>
     
   </header>

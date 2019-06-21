@@ -9,7 +9,6 @@
 
 
 // begins template. -------------------------------------------------------------------------
-bootstrap_child_redirect_to_login_if_not_login();
 get_header();
 ?> 
                 <main id="main" class="col-md-12 site-main" role="main">

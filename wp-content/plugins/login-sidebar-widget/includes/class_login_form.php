@@ -16,8 +16,8 @@ class ap_login_form{
 	public function add_extra_links(){
 		
 		$fp_url 						= '';
-		$login_ap_forgot_pass_link 	= get_option('login_ap_forgot_pass_link');
-		$login_ap_forgot_pass_page_url = get_option('login_ap_forgot_pass_page_url');
+		$login_ap_forgot_pass_link 		= get_option('login_ap_forgot_pass_link');
+		$login_ap_forgot_pass_page_url 	= get_option('login_ap_forgot_pass_page_url');
 		
 		$reg_url 						= '';
 		$login_ap_register_link 		= get_option('login_ap_register_link');

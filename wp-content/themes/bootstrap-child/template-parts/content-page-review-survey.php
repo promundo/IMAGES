@@ -8,19 +8,12 @@
 
 
 $Bsb4Design = new \BootstrapBasic4\Bsb4Design();
-$user_id = get_current_user_id();
 
 ?> 
 <article id="post-<?php the_ID(); ?>" <?php post_class('review-survey'); ?>>
     <div class="entry-content">
       <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
-      <form action="">
-        <div class="form-item">
-          <input type="text" placeholder="<?php echo __('Name Your Survey', 'bootstrap-child'); ?>" name="survey_name">
-        </div>
-      </form>
-      <a data-user-id="<?php echo $user_id;?>" class="export-survey" href=""><?php echo __('Print the Survey
-      ', 'bootstrap-child'); ?></a>
-    </div><!-- .entry-content -->
+      <?php the_content(); ?> 
+     </div><!-- .entry-content -->
 </article><!-- #post-## -->
-<?php unset($Bsb4Design); ?> 
+<?php unset($Bsb4Design); ?>

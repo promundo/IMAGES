@@ -8,7 +8,7 @@
 
 
 $Bsb4Design = new \BootstrapBasic4\Bsb4Design();
-$pdf_record = get_field( "country_pdf" );
+//$pdf_record = get_field( "country_pdf" );
 $pdf_detailed = get_field( "country_detailed_pdf" );
 $resource_links = get_field( "resource_links" );
 $text_blocks = get_field( "text_blocks" );
@@ -18,11 +18,6 @@ if (!empty($resource_links)) $content_class = "col-md-8 col-lg-9"; else $content
 ?> 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="entry-content">
-        <?php if (!empty($pdf_record)) : ?>
-          <?php if ($pdf_record['mime_type'] == 'application/pdf') : ?>
-            <?php // echo do_shortcode('[pdf-embedder url="'.$pdf_record['url'].'" width="840"]'); ?>
-          <?php endif; ?>
-        <?php endif; ?>
         <div class="row">
           <div class="<?php print $content_class; ?>">
             <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
@@ -53,12 +48,14 @@ if (!empty($resource_links)) $content_class = "col-md-8 col-lg-9"; else $content
                 <h2 class="widget-title">Resource links</h2>
                 <ul class="links">
                 <?php foreach ($resource_links as $link) : ?>
-                  <?php
-                    $link_url = $link['link']['url'];
-                    $link_title = $link['link']['title'];
-                    $link_target = $link['link']['target'] ? $link['link']['target'] : '_self';
-                  ?>
-                  <li><a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a></li>
+                  <?php if (!empty($link['link'])) :?>
+                    <?php
+                      $link_url = @$link['link']['url'];
+                      $link_title = @$link['link']['title'];
+                      $link_target = @$link['link']['target'] ? $link['link']['target'] : '_self';
+                    ?>
+                    <li><a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>"><?php echo esc_html($link_title); ?></a></li>
+                  <?php endif; ?>
                 <?php endforeach; ?>
                 </ul>
               </div>

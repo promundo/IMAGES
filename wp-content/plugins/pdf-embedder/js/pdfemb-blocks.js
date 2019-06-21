@@ -55,7 +55,7 @@
             edit: function( props ) {
 				
 				var {attributes , setAttributes, focus, className} = props;
-                	
+                
 				var InspectorControls = wp.editor.InspectorControls;
 				var Button = wp.components.Button;
 				var RichText = wp.editor.RichText;
@@ -65,7 +65,7 @@
 				var TextControl = wp.components.TextControl;
 				var SelectControl = wp.components.SelectControl;
 				var RadioControl = wp.components.RadioControl;
-					
+				
 				var onSelectPDF = function(media) {
                     return props.setAttributes({
                         url: media.url,

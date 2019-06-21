@@ -1,11 +1,5 @@
 <?php
 
-if (!function_exists('set_html_content_type')) {
-	function set_html_content_type() {
-		return 'text/html';
-	}
-}
-	
 function login_validate(){
 	if( isset($_POST['option']) and $_POST['option'] == "ap_user_login"){
 		
@@ -35,7 +29,7 @@ function login_validate(){
 			$user = wp_signon( $creds, true );
 			if(isset($user->ID) and $user->ID != ''){
 				wp_set_auth_cookie($user->ID, $remember);
-				$lla->log_add($_SERVER['REMOTE_ADDR'], 'Login success', date("Y-m-d H:i:s"), 'success');
+				$lla->log_add(apply_filters( 'lwws_log_ip', $_SERVER['REMOTE_ADDR'] ), 'Login success', date("Y-m-d H:i:s"), 'success');
 				wp_redirect( apply_filters( 'lwws_login_redirect', sanitize_text_field($_POST['redirect']), $user->ID ) );
 				exit;
 			} else{
@@ -46,7 +40,7 @@ function login_validate(){
 		} else {
 			$aperror->add( "msg_class", "error_wid_login" );
 			$aperror->add( "msg", __('Username or password is empty!','login-sidebar-widget') );
-			$lla->log_add($_SERVER['REMOTE_ADDR'], 'Username or password is empty', date("Y-m-d H:i:s"), 'failed');
+			$lla->log_add(apply_filters( 'lwws_log_ip', $_SERVER['REMOTE_ADDR'] ), 'Username or password is empty', date("Y-m-d H:i:s"), 'failed');
 		}
 	}
 }
@@ -75,7 +69,7 @@ function forgot_pass_validate(){
 			$message = nl2br(get_option('new_password_mail_body'));
 			$message = str_replace(array('#site_url#','#user_name#','#user_password#'), array(site_url(),$user_login,$new_password), $message);
 			$message = stripslashes(html_entity_decode($message));
-			add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+			add_filter( 'wp_mail_content_type', 'lsw_set_html_content_type' );
 			if ( $message && !wp_mail($user_email, stripslashes(get_option('new_password_mail_subject')), $message, $headers) ) {
 				wp_die(__('Email failed to send for some unknown reason.','login-sidebar-widget'));
 				exit;
@@ -84,7 +78,7 @@ function forgot_pass_validate(){
 				wp_die(__('New Password successfully sent to your mail address.','login-sidebar-widget'));
 				exit;
 			}
-			remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+			remove_filter( 'wp_mail_content_type', 'lsw_set_html_content_type' );
 		} 
 		else {
 			wp_die(__('Not a valid key.','login-sidebar-widget'));
@@ -141,7 +135,7 @@ function forgot_pass_validate(){
 			$message = nl2br(get_option('forgot_password_link_mail_body'));
 			$message = str_replace(array('#site_url#','#user_name#','#resetlink#'), array(site_url(),$user_login,$resetlink), $message);
 			$message = stripslashes(html_entity_decode($message));
-			add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+			add_filter( 'wp_mail_content_type', 'lsw_set_html_content_type' );
 						
 			if ( !wp_mail($user_email, stripslashes(get_option('forgot_password_link_mail_subject')), $message, $headers) ) {
 				$aperror->add( "reg_msg_class", "error_wid_login" );
@@ -151,7 +145,7 @@ function forgot_pass_validate(){
 				$aperror->add( "reg_msg_class", "error_wid_login" );
 				$aperror->add( "reg_error_msg", __('We have just sent you an email with Password reset instructions.','login-sidebar-widget') );	
 			}
-			remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+			remove_filter( 'wp_mail_content_type', 'lsw_set_html_content_type' );
 		} else {
 			$aperror->add( "reg_msg_class", "error_wid_login" );
 			$aperror->add( "reg_error_msg", $msg );	

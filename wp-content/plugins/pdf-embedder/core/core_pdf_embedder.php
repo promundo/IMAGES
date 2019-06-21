@@ -645,7 +645,7 @@ class core_pdf_embedder {
 		wp_enqueue_style(
 			'pdfemb-gutenberg-block-css', // Handle.
 			$this->my_plugin_url(). 'css/pdfemb-blocks.css', // editor.css: This file styles the block within the Gutenberg editor.
-			array( 'wp-edit-blocks' ), // Dependencies, defined above.
+			//array( 'wp-edit-blocks' ), // Dependencies, defined above.
 			$this->PLUGIN_VERSION
 		);
 	}
@@ -654,7 +654,7 @@ class core_pdf_embedder {
 		wp_enqueue_style(
 			'pdfemb-gutenberg-block-backend-js', // Handle.
 			$this->my_plugin_url(). 'css/pdfemb-blocks.css', // style.css: This file styles the block on the frontend.
-			array( 'wp-blocks' ), // Dependencies, defined above.
+			//array( 'wp-blocks' ), // Dependencies, defined above.
 			$this->PLUGIN_VERSION
 		);
 	}

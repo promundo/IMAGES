@@ -1,4 +1,5 @@
 <?php
+
 if(!class_exists('login_widget_admin_security')){
 	class login_widget_admin_security {
 		
@@ -34,7 +35,7 @@ if(!class_exists('login_widget_admin_security')){
 	
 		public function check_ap_login_success(){
 			$lla = new login_log_adds;
-			$lla->log_add($_SERVER['REMOTE_ADDR'], 'Login success', date("Y-m-d H:i:s"), 'success');
+			$lla->log_add(apply_filters( 'lwws_log_ip', $_SERVER['REMOTE_ADDR'] ), 'Login success', date("Y-m-d H:i:s"), 'success');
 		}
 		
 		public function check_ap_login_failed( $error ){	
@@ -48,7 +49,12 @@ if(!class_exists('login_widget_admin_security')){
 			}
 			
 			if ( in_array( 'invalid_username', $err_codes ) or in_array( 'invalid_email', $err_codes ) or in_array( 'incorrect_password', $err_codes ) ) {
-				$lla->log_add($_SERVER['REMOTE_ADDR'], 'Error in login', date("Y-m-d H:i:s"), 'failed');
+				$lla->log_add(apply_filters( 'lwws_log_ip', $_SERVER['REMOTE_ADDR'] ), 'Error in login', date("Y-m-d H:i:s"), 'failed');
+			}
+			
+			// compatibility added for google authenticator plugin
+			if ( in_array( 'invalid_google_authenticator_token', $err_codes ) ) {
+				$lla->log_add(apply_filters( 'lwws_log_ip', $_SERVER['REMOTE_ADDR'] ), 'Invalid google authenticator code', date("Y-m-d H:i:s"), 'failed');
 			}
 			
 			return $error;
@@ -58,7 +64,12 @@ if(!class_exists('login_widget_admin_security')){
 			$lla = new login_log_adds;
 			$err_codes = $error->get_error_codes();
 			if ( in_array( 'invalid_username', $err_codes ) or in_array( 'invalid_email', $err_codes ) or in_array( 'incorrect_password', $err_codes ) ) {
-				$lla->log_add($_SERVER['REMOTE_ADDR'], 'Error in login', date("Y-m-d H:i:s"), 'failed');
+				$lla->log_add(apply_filters( 'lwws_log_ip', $_SERVER['REMOTE_ADDR'] ), 'Error in login', date("Y-m-d H:i:s"), 'failed');
+			}
+			
+			// compatibility added for google authenticator plugin
+			if ( in_array( 'invalid_google_authenticator_token', $err_codes ) ) {
+				$lla->log_add(apply_filters( 'lwws_log_ip', $_SERVER['REMOTE_ADDR'] ), 'Invalid google authenticator code', date("Y-m-d H:i:s"), 'failed');
 			}
 			
 		}
@@ -74,14 +85,14 @@ if(!class_exists('login_widget_admin_security')){
 			$captcha_on_admin_login = (get_option('captcha_on_admin_login') == 'Yes'?true:false);
 			if($captcha_on_admin_login){
 				if( isset($_POST['admin_captcha']) and sanitize_text_field($_POST['admin_captcha']) != $_SESSION['lsw_captcha_code'] ){
-					$lla->log_add($_SERVER['REMOTE_ADDR'], 'Security code do not match', date("Y-m-d H:i:s"), 'failed');
+					$lla->log_add(apply_filters( 'lwws_log_ip', $_SERVER['REMOTE_ADDR'] ), 'Security code do not match', date("Y-m-d H:i:s"), 'failed');
 					return new WP_Error( 'error_security_code', __( "Security code do not match.", "login-sidebar-widget" ) );
 				}
 			}
 			
 			$captcha_on_user_login = (get_option('captcha_on_user_login') == 'Yes'?true:false);
 			if( $captcha_on_user_login and (isset($_POST['user_captcha']) and sanitize_text_field($_POST['user_captcha']) != $_SESSION['lsw_captcha_code']) ){
-				$lla->log_add($_SERVER['REMOTE_ADDR'], 'Security code do not match', date("Y-m-d H:i:s"), 'failed');
+				$lla->log_add(apply_filters( 'lwws_log_ip', $_SERVER['REMOTE_ADDR'] ), 'Security code do not match', date("Y-m-d H:i:s"), 'failed');
 				return new WP_Error( 'error_security_code', __( "Security code do not match.", "login-sidebar-widget" ) );
 			} 
 			
@@ -95,7 +106,7 @@ if(!class_exists('login_widget_admin_security')){
 		
 					$captcha_temp_string = filter_input(INPUT_POST, 'aiowps-captcha-temp-string', FILTER_SANITIZE_STRING);
 					if ( is_null($captcha_temp_string) ){
-						$lla->log_add($_SERVER['REMOTE_ADDR'], 'Security answer is incorrect', date("Y-m-d H:i:s"), 'failed');
+						$lla->log_add(apply_filters( 'lwws_log_ip', $_SERVER['REMOTE_ADDR'] ), 'Security answer is incorrect', date("Y-m-d H:i:s"), 'failed');
 						return $captcha_error;
 					}
 					$captcha_secret_string = $aio_wp_security->configs->get_value('aiowps_captcha_secret_key');
@@ -103,7 +114,7 @@ if(!class_exists('login_widget_admin_security')){
 					$trans_handle = sanitize_text_field(filter_input(INPUT_POST, 'aiowps-captcha-string-info', FILTER_SANITIZE_STRING));
 					$captcha_string_info_trans = (AIOWPSecurity_Utility::is_multisite_install() ? get_site_transient('aiowps_captcha_string_info_'.$trans_handle) : get_transient('aiowps_captcha_string_info_'.$trans_handle));
 					if ( $submitted_encoded_string !== $captcha_string_info_trans ){
-						$lla->log_add($_SERVER['REMOTE_ADDR'], 'Security answer is incorrect', date("Y-m-d H:i:s"), 'failed');
+						$lla->log_add(apply_filters( 'lwws_log_ip', $_SERVER['REMOTE_ADDR'] ), 'Security answer is incorrect', date("Y-m-d H:i:s"), 'failed');
 						return $captcha_error;
 					}
 				}

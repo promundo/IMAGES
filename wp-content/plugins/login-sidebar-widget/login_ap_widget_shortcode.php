@@ -1,4 +1,5 @@
 <?php
+
 function login_widget_ap_shortcode( $atts ) {
      global $post;
 	 extract( shortcode_atts( array(

@@ -108,8 +108,21 @@ function variables_migrate_start_migrate_ajax($count){
       if (($handle = fopen($path_file, "r")) !== FALSE) {
         while (($data = fgetcsv($handle, 0, "\t")) !== FALSE) {
           if (($row >= ($count + 1)) && ($row < ($count + $limit + 1))) {
-            $country = ucfirst(strtolower($data[0]));
-            $gender = strtolower($data[1]);
+            $variable_name = trim($data[0]);
+            $scale = trim($data[1]);
+            $question = trim($data[2]);
+            $theme = trim($data[3]);
+            $cross_theme = trim($data[4]);
+            $country = ucfirst(strtolower(trim($data[5])));
+            $gender = strtolower(trim($data[6]));
+            $year = trim($data[7]);
+            $language = ucfirst(strtolower(trim($data[8])));
+            $response_label = ucfirst(strtolower(str_replace("’", "'", trim($data[9]))));
+            $response_value = trim($data[10]);
+            $base_segment = ucfirst(strtolower(str_replace("’", "'", trim($data[11]))));
+            //$flag = (!empty(trim($data[10]))) ? trim($data[10]) : 0;
+            
+
             switch ($gender) {
               case 'men':
                 $who_asked = 'all_men';
@@ -121,17 +134,6 @@ function variables_migrate_start_migrate_ajax($count){
                 $who_asked = '';
                 break;
             }
-
-            $year = $data[2];
-            $theme = $data[3];
-            $flag = (!empty($data[6])) ? $data[6] : 0;
-
-            $language = ucfirst(strtolower($data[7]));
-            $question = $data[8];
-            $response_label = ucfirst(strtolower(str_replace("’", "'", $data[9])));
-            $response_value = $data[10];
-            $base_segment = ucfirst(strtolower(str_replace("’", "'", $data[11])));
-            $scale = trim($data[14]);
 
             $exist_variable = get_posts(array(
               'numberposts' => -1,
@@ -151,6 +153,11 @@ function variables_migrate_start_migrate_ajax($count){
             $theme_term_id = '';
             if (!empty($theme)) {
               $theme_term_id = variables_migrate_get_term_id_by_name($theme, 'theme_category');
+            }
+
+            $cross_theme_term_id = '';
+            if (!empty($cross_theme)) {
+              $cross_theme_term_id = variables_migrate_get_term_id_by_name($cross_theme, 'theme_category');
             }
 
             $scale_term_id = '';
@@ -214,8 +221,18 @@ function variables_migrate_start_migrate_ajax($count){
             update_field('response_options', $response_options, $variable_id);
             update_field('response', $response, $variable_id);
             update_field('question_text', $question, $variable_id);
-            update_field('survey_flag', $flag, $variable_id);
+
+            $current_cross_theme = get_field( "cross_theme", $variable_id );
+            $cross_theme_new = [$cross_theme_term_id];
+            if (!empty($current_cross_theme)) {
+              $cross_theme_new = array_merge($cross_theme_new, $current_cross_theme);
+            }
+
+            update_field('cross_theme', $cross_theme_new, $variable_id);
+            update_field('variable_name', $variable_name, $variable_id);
             update_field('base_segment', $base_segment, $variable_id);
+            //update_field('survey_flag', $flag, $variable_id);
+            
             wp_set_post_terms($variable_id, $theme_term_id, 'theme_category', true);
             wp_set_post_terms($variable_id, $scale_term_id, 'scale_category', true);
           }

@@ -5,14 +5,14 @@
 * Version: 1.0
 **/
 
-function print_survey_export_file($variables, $filename, $user_id){
+function print_survey_export_file($variables, $filename, $session_id){
   require_once 'PhpWord/bootstrap.php';
 
 
   $dir = plugin_dir_path( __FILE__ );
   $template = $dir . 'resources/template.docx';
   $upload_dir = wp_get_upload_dir();
-  $resuts = $upload_dir['basedir'] . '/print-survey/' .$user_id. '/'. $filename;
+  $resuts = $upload_dir['basedir'] . '/print-survey/' . $session_id . '/'. $filename;
   $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor($template);
 
 
@@ -124,30 +124,30 @@ function print_survey_export_action(){
   check_ajax_referer( 'ajaxNonce', 'nonce_code' );
   $data = array();
   $data['url'] = '';
-  $user_id = $_POST['user_id'];
-  if ($user_id > 0) {
+  session_start();
+  $session_id = session_id();
+  $variables = $_SESSION['user_variables'];
+
+  if (!empty($session_id)) {
     $survey_name = $_POST['survey_name'];
     if (empty($survey_name)) $survey_name = 'survey-name';
     $survey_name = trim($survey_name);
     $survey_name = strtolower($survey_name);
-    $filename = $survey_name.'.docx';
+    $filename = $survey_name . '.docx';
     
-    $id = "user_" . $user_id;
-    $variables = get_field( 'variables', $id );
-
     $upload_dir = wp_get_upload_dir();
-    $dir_path = $upload_dir['basedir'] . '/print-survey/' .$user_id;
+    $dir_path = $upload_dir['basedir'] . '/print-survey/' . $session_id;
     if (!file_exists($dir_path)) {
         mkdir($dir_path, 0755, true);
     }
 
-    print_survey_export_file($variables,$filename,$user_id);
-    update_field( 'print_survey', 1, $id );
-    update_field( 'autoload_survey', 0, $id );
+    print_survey_export_file($variables, $filename, $session_id);
+    //update_field( 'print_survey', 1, $id );
+    //update_field( 'autoload_survey', 0, $id );
     //update_field( 'variables', [], $id );
 
     
-    $data['url'] = $upload_dir['baseurl'] . '/print-survey/'.$user_id .'/'. $filename;
+    $data['url'] = $upload_dir['baseurl'] . '/print-survey/' . $session_id . '/'. $filename;
   }
 
   echo json_encode($data);

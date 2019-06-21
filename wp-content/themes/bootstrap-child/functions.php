@@ -1,5 +1,6 @@
 <?php
 
+include( plugin_dir_path(__FILE__) . '/src/Session.php');
 
 if (!function_exists('bootstrap_child_enqueue_scripts')) {
 
@@ -88,13 +89,10 @@ add_filter('body_class','bootstrap_child_add_class');
 
 function bootstrap_child_add_class( $classes ) {
   $post_id = get_the_ID();
-  $user_id = get_current_user_id();
-  if ($user_id > 0) {
-    $id = "user_" . $user_id;
-    $variables = get_field( 'variables', $id );
-    if (empty($variables)) {
-      $classes[] = 'hide-print-survey';
-    }
+  $session = Session::getInstance();
+  $variables = $session->user_variables;
+  if (empty($variables)) {
+    $classes[] = 'hide-print-survey';
   }
 
   if ($post_id == '2342') {
@@ -134,6 +132,19 @@ add_action('lwws_userpassword_field', 'bootstrap_child_userpassword_field');
 function bootstrap_child_userpassword_field(){
   echo 'placeholder="Password"';
 }
+
+function bootstrap_child_print_survey_form_shortcode($attr){
+  ob_start();
+  $form_path = get_stylesheet_directory() . '/template-parts/print_survey_form.php';
+  include($form_path);
+  $output = ob_get_contents();
+  ob_end_clean();
+  return $output;
+}
+
+add_shortcode('print_survey_form', 'bootstrap_child_print_survey_form_shortcode');
+
+
 
 function bootstrap_child_get_countries(){
   $countries = array();
@@ -308,13 +319,13 @@ add_action( 'wp_ajax_nopriv_select-variable', 'bootstrap_child_select_variable' 
 add_action( 'wp_ajax_select-variable', 'bootstrap_child_select_variable' );
 function bootstrap_child_select_variable(){
   check_ajax_referer( 'myajax-nonce', 'nonce_code' );
-  $user_id = get_current_user_id();
+  $session = Session::getInstance();
   $post_id = $_POST['post_id'];
   $count = 0;
-  if ($user_id > 0 && $post_id > 0) {
-    $id = "user_" . $user_id;
+
+  if ($post_id > 0) {
     $variables_id = [$post_id];
-    $variables = get_field( 'variables', $id );
+    $variables = $session->user_variables;
     if (!empty($variables)) {
       foreach ($variables as $key => $value) {
         $variables_id[] = $value;
@@ -322,7 +333,7 @@ function bootstrap_child_select_variable(){
     }
 
     $variables_id = array_unique($variables_id);
-    update_field( 'variables', $variables_id, $id );
+    $session->user_variables = $variables_id;
     $count = count($variables_id);
   }
 
@@ -336,14 +347,11 @@ add_action( 'wp_ajax_nopriv_get-count-variable', 'bootstrap_child_get_count_vari
 add_action( 'wp_ajax_get-count-variable', 'bootstrap_child_get_count_variable' );
 function bootstrap_child_get_count_variable(){
   check_ajax_referer( 'myajax-nonce', 'nonce_code' );
-  $user_id = get_current_user_id();
   $count = 0;
-  if ($user_id > 0) {
-    $id = "user_" . $user_id;
-    $variables = get_field( 'variables', $id );
-    if (!empty($variables)) {
-      $count = count($variables);
-    }
+  $session = Session::getInstance();
+  $variables = $session->user_variables;
+  if (!empty($variables)) {
+    $count = count($variables);
   }
 
   echo $count;
@@ -355,15 +363,14 @@ add_action( 'wp_ajax_remove-variable', 'bootstrap_child_remove_variable' );
 function bootstrap_child_remove_variable(){
   check_ajax_referer( 'myajax-nonce', 'nonce_code' );
   $result = false;
-  $user_id = get_current_user_id();
+  $session = Session::getInstance();
   $remove_ids = $_POST['var_ids'];
-  if ($user_id > 0 && !empty($remove_ids)) {
-    $id = "user_" . $user_id;
+  if (!empty($remove_ids)) {
     $variable_ids = [];
-    $variables = get_field( 'variables', $id );
+    $variables = $session->user_variables;
     if (!empty($variables)) {
       $new_ids = array_diff($variables, $remove_ids);
-      update_field( 'variables', $new_ids, $id );
+      $session->user_variables = $new_ids;
       $result = true;
     }
   }
@@ -376,13 +383,10 @@ function bootstrap_child_remove_variable(){
 
 function bootstrap_child_shortcode_selected_variables(){
   $count = 0;
-  $user_id = get_current_user_id();
-  if ($user_id > 0) {
-    $id = "user_" . $user_id;
-    $variables = get_field( 'variables', $id );
-    if (!empty($variables)) {
-      $count = count($variables);
-    }
+  $session = Session::getInstance();
+  $variables = $session->user_variables;
+  if (!empty($variables)) {
+    $count = count($variables);
   }
   
   return $count;
@@ -391,33 +395,10 @@ add_shortcode('count_variables', 'bootstrap_child_shortcode_selected_variables')
 
 function bootstrap_child_get_survey_variables(){
   $variables = [];
-  $user_id = get_current_user_id();
-  if ($user_id > 0) {
-    $id = "user_" . $user_id;
-    $variables = get_field( 'variables', $id );
-    if (empty($variables)) {
-      $variables = [];
-    }
-    $survey_variables = get_post_id_by_meta_key_and_value('survey_flag', 1);
-    
-    if (empty($survey_variables)) {
-      $survey_variables = [];
-    }
-
-    $autoload_survey = get_field( 'autoload_survey', $id );
-    $print_survey = get_field( 'print_survey', $id );
-
-    if ($print_survey) {
-      $variables = $survey_variables;
-      update_field( 'variables', $survey_variables, $id );
-      update_field( 'print_survey', 0, $id );
-    }
-    elseif (!$autoload_survey) {
-      $variables = array_merge($variables, $survey_variables);
-      $variables = array_unique($variables);
-      update_field( 'variables', $variables, $id );
-      update_field( 'autoload_survey', 1, $id );
-    }
+  $session = Session::getInstance();
+  $variables = $session->user_variables;
+  if (empty($variables)) {
+    $variables = [];
   }
 
   return $variables;

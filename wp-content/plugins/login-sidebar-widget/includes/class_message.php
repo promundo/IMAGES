@@ -1,4 +1,5 @@
 <?php
+
 if(!class_exists('login_message_class')){
 	class login_message_class {
 		public function show_message(){

@@ -3,7 +3,7 @@
 Plugin Name: WP Register Profile With Shortcode
 Plugin URI: https://wordpress.org/plugins/wp-register-profile-with-shortcode/
 Description: This is a simple registration form in the widget. just install the plugin and add the register widget in the sidebar. Thats it. :)
-Version: 3.5.0
+Version: 3.5.1
 Text Domain: wp-register-profile-with-shortcode
 Domain Path: /languages
 Author: aviplugins.com
@@ -30,7 +30,11 @@ include_once WPRPWS_DIR_PATH . '/config/config_default_fields.php';
 // CONFIG
 
 function wrrp_plug_install(){
-	
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	if ( is_plugin_active( 'wp-register-profile-pro/register.php' ) ) {
+	 	wp_die('It seems you have <strong>WP Register Profile PRO</strong> plugin activated. Please deactivate to continue.');
+		exit;
+	}
 	include_once WPRPWS_DIR_PATH . '/includes/class_settings.php';
 	include_once WPRPWS_DIR_PATH . '/includes/class_scripts.php';
 	include_once WPRPWS_DIR_PATH . '/includes/class_form.php';
@@ -58,23 +62,6 @@ class wp_register_init {
 	}
 }
 new wp_register_init;
-
-function wp_register_profile_set_default_data() {
-	global $wprw_mail_to_user_subject, $wprw_mail_to_user_body;
-	
-	if( get_option( 'new_user_register_mail_subject' ) == '' ){
-		update_option( 'new_user_register_mail_subject', $wprw_mail_to_user_subject );
-	}
-	if( get_option( 'new_user_register_mail_body' ) == '' ){
-		update_option( 'new_user_register_mail_body', $wprw_mail_to_user_body );
-	}
-	
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	if ( !is_plugin_active( 'wp-user-subscription/subscription.php' ) ) {
-	 	delete_option( 'enable_subscription' );
-	}
-	
-}
 
 register_activation_hook( __FILE__, 'wp_register_profile_set_default_data' );
 
