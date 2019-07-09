@@ -80,6 +80,7 @@ if (!function_exists('bootstrap_child_theme_setup')) {
   {
 
     add_image_size( 'page_image', 390, 510, true);
+    add_image_size( 'page_image_large', 1950, 2550, true);
   }
 
 }

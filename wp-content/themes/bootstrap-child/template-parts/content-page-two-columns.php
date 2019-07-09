@@ -29,7 +29,7 @@ if (!empty($next) || !empty($skip)) {
       <?php if (has_post_thumbnail()) : ?>
         <div class="image">
           <div class="image-inner">
-              <?php the_post_thumbnail('page_image'); ?>
+              <?php the_post_thumbnail('page_image_large'); ?>
           </div>
         </div>
       <?php endif; ?>
