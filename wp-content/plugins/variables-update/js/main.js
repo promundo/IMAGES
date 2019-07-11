@@ -28,7 +28,7 @@
       success: function(data){
         count++;
         if(data == 1){
-          $('#update-script .process').text("Importing: " + 2*count);
+          $('#update-script .process').text("Importing: " + count);
           sendAjax();
         }
         else{
