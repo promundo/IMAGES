@@ -43,7 +43,7 @@ function variables_update_start_update_ajax($count){
   global $wpdb;
 
   $type = 'variable';
-  $limit = 3;
+  $limit = 2;
   if($count != 0){
     $count = $count * $limit; 
   }
