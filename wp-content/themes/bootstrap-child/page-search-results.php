@@ -37,9 +37,9 @@ if ($sort_by == 'theme') {
 }
 
 if ($sort_by == 'year') {
-  $args['meta_key'] = 'max_year';
+  $args['meta_key'] = 'min_year';
   $args['orderby'] = 'meta_value_num';
-  $args['order'] = 'DESC';
+  $args['order'] = 'ASC';
 }
 
 if ($sort_by == 'name_asc') {
