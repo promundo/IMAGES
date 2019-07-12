@@ -285,8 +285,12 @@ function bootstrap_child_get_sort_option($default = ''){
       'name' => __('Theme', 'bootstrap-child')
     ],
     [
-      'id' => 'year',
-      'name' => __('Year', 'bootstrap-child')
+      'id' => 'year_asc',
+      'name' => __('Year (ASC)', 'bootstrap-child')
+    ],
+    [
+      'id' => 'year_desc',
+      'name' => __('Year (DESC)', 'bootstrap-child')
     ],
     [
       'id' => 'name_asc',

@@ -36,10 +36,16 @@ if ($sort_by == 'theme') {
   $args['order'] = 'ASC';
 }
 
-if ($sort_by == 'year') {
+if ($sort_by == 'year_asc') {
   $args['meta_key'] = 'min_year';
   $args['orderby'] = 'meta_value_num';
   $args['order'] = 'ASC';
+}
+
+if ($sort_by == 'year_desc') {
+  $args['meta_key'] = 'max_year';
+  $args['orderby'] = 'meta_value_num';
+  $args['order'] = 'DESC';
 }
 
 if ($sort_by == 'name_asc') {
