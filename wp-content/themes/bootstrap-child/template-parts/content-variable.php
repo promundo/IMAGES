@@ -18,6 +18,7 @@ $response_type = get_field( "response_type" );
 //$notes = get_field( "notes" );
 $notes = [];
 $response = get_field( "response" );
+
 $languages = [];
 
 $session = Session::getInstance();
@@ -25,11 +26,21 @@ $selected_variables = $session->user_variables;
 
 if (!empty($response)) {
   foreach ($response as $key => $value) {
+    if (!empty($value['country'])) {
+      $alphabetic_response[$value['country']->name][] = $value;
+    }
+    
     if (!empty($value['language'])) {
       $languages[] = $value['language']->name;
     }
   }
-
+  ksort($alphabetic_response);
+  $response = array();
+  foreach ($alphabetic_response as $item) {
+    foreach ($item as $value) {
+      $response[] = $value;
+    }
+  }
   if (!empty($languages)) {
     $languages = array_unique($languages);
   }
@@ -84,7 +95,7 @@ if (!$related_scale && !empty($theme_terms)) {
       <a class="back-btn" href="javascript:history.back()"><?php echo __('Back', 'bootstrap-child'); ?></a>
       <header class="entry-header">
         <h1 class="entry-title"><?php the_title(); ?></h1>
-        <?php if(!in_array($post_id, $selected_variables)): ?>
+        <?php if(empty($selected_variables) || !in_array($post_id, $selected_variables)): ?>
           <div class="links">
             <a class="select-variable" data-post-id="<?php echo $post_id; ?>" href="#"><?php echo __('Select this variable', 'bootstrap-child'); ?></a>
           </div>

@@ -685,7 +685,8 @@ h5 {
     margin: 0;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #ddd; }
+    border: 1px solid #ddd;
+    white-space: normal; }
     .theme-container .dropdown-toggle:after,
     .scale-container .dropdown-toggle:after,
     .country-container .dropdown-toggle:after,
@@ -697,12 +698,7 @@ h5 {
       position: absolute;
       width: 10px;
       height: 6px;
-      -webkit-transform: translateY(-50%);
-      -moz-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-      -o-transform: translateY(-50%);
-      transform: translateY(-50%);
-      top: 50%;
+      top: 20px;
       right: 15px;
       background: url("../images/triangle-grey.svg");
       background-size: 100% auto;
